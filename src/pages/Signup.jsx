@@ -138,45 +138,6 @@ export default function Signup() {
 
         <div className="mt-6 sm:mx-auto sm:w-full sm:max-w-sm">
           <form className="space-y-5" onSubmit={handleOnSubmit}>
-            <div className="grid grid-cols-1 gap-x-5 sm:grid-cols-2">
-              <div>
-                <div className=" relative rounded-md shadow-sm">
-                  <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                    <User size={16} className="text-gray-600" />
-                  </div>
-
-                  <input
-                    id="firstname"
-                    name="firstname"
-                    type="text"
-                    placeholder="First name"
-                    className="block w-full h-12 rounded-md border-0 py-1.5 pl-8 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-600 focus:ring-2 focus:ring-inset focus:ring-teal-300 sm:text-sm sm:leading-6"
-                    value={user.firstname}
-                    onChange={handleOnChange}
-                  />
-                </div>
-                {<span className="text-error">{errors.firstname}</span>}
-              </div>
-
-              <div>
-                <div className=" relative rounded-md shadow-sm">
-                  <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                    <User size={16} className="text-gray-600" />
-                  </div>
-                  <input
-                    id="lastname"
-                    name="lastname"
-                    type="text"
-                    placeholder="Last name"
-                    className="block w-full h-12 rounded-md border-0 py-1.5 pl-8 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-600 focus:ring-2 focus:ring-inset focus:ring-teal-300 sm:text-sm sm:leading-6"
-                    value={user.lastname}
-                    onChange={handleOnChange}
-                  />
-                </div>
-                {<span className="text-error">{errors.lastname}</span>}
-              </div>
-            </div>
-
             <div>
               <div className="mt-2.5 relative rounded-md shadow-sm">
                 <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
