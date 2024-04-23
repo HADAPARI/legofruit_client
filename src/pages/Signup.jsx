@@ -87,7 +87,7 @@ export default function Signup() {
       ...error,
       password: validateField(
         user.password,
-        null,
+        passwordRegex,
         "Validate a strong password.(6 caracters minimum,20 maximum, with at least one uppercase letter, one lowercase letter, one number and one special character)"
       ),
     }));
