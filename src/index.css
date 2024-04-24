@@ -1,3 +1,19 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.promotion{
+    clip-path: polygon(100% 0%, 90% 50%, 100% 100%, 0 100%, 0% 50%, 0 0);
+}
+
+.bull::after{
+    content: '';
+    clip-path: polygon(100% 0, 0 0, 50% 100%);
+}
+
+.transparent {
+    background-color: rgba(255, 255, 255, 0.7);
+  
+    /* Dégradé linéaire pour créer un effet d'opacité */
+    background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.7));
+  }

@@ -1,10 +1,15 @@
 import { Outlet } from "react-router-dom";
 
+import Header from "./Header";
+import Footer from "./Footer";
+
 const Root = () => {
   return (
-    <div className="w-screen h-screen flex-col">
+    <>
+      <Header/>
       <Outlet />
-    </div>
+      <Footer/>
+    </>
   );
 };
 

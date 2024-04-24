@@ -1,5 +1,6 @@
 // import { useSelector, useDispatch } from "react-redux";
 import Root from "./components/Root";
+import Activation from "./pages/Activation";
 import ErrorPage from "./pages/ErrorPage";
 import Home from "./pages/Home";
 import Signin from "./pages/Signin";
@@ -8,7 +9,6 @@ import Signup from "./pages/Signup";
 import { createBrowserRouter, RouterProvider } from "react-router-dom"
 
 const App = () => {
-  // const BASE_URL = import.meta.env.VITE_BASE_URL
 
   // const count = useSelector((state) => state.counter.value);
   // const dispatch = useDispatch();
@@ -30,6 +30,10 @@ const App = () => {
         { 
           path: "signin", 
           element: <Signin/>,
+        },
+        { 
+          path: "account/activation/:token", 
+          element: <Activation/>,
         }
       ]
     }
