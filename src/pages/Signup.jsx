@@ -10,6 +10,7 @@ import {
 import axios from "axios";
 import { useState } from "react";
 import validateField from "../utilities/validation";
+import { Link } from "react-router-dom";
 
 export default function Signup() {
   const un = 1;
@@ -22,8 +23,14 @@ export default function Signup() {
     address: "",
     country: "",
     region: "",
+    role: "2",
     password: "",
     verifiedpassword: "",
+    state: false,
+    bntProducer:
+      "btn bg-green-500 border border-green-500 text-white hover:bg-green-600 w-64 join-item",
+    btnMarket:
+      "btn btn-outline w-64 border-green-500 text-green-500 hover:bg-orange-100 hover:border-orange-100 hover:text-orange-500 join-item",
   });
   const [errors, setErrors] = useState({
     firstname: "",
@@ -43,6 +50,103 @@ export default function Signup() {
 
     setErrors({ ...errors, [name]: "" });
   };
+
+  let firstLineInput = null;
+
+  const handleClickProducer = () => {
+    const btnProducerClicked =
+      "btn bg-green-500 border border-green-500 text-white hover:bg-green-600 w-64 join-item";
+    const btnMarketUnselected =
+      "btn btn-outline w-64 border-green-500 text-green-500 hover:bg-orange-100 hover:border-orange-100 hover:text-orange-500 join-item";
+    const state = false;
+    setUser((user) => ({
+      ...user,
+      state: state,
+      bntProducer: btnProducerClicked,
+      btnMarket: btnMarketUnselected,
+      role: 2,
+    }));
+  };
+
+  const handleClickMarket = () => {
+    const btnMarketClicked =
+      "btn btn-outline w-64 border-orange-500 bg-orange-500 hover:border-orange-600 hover:bg-orange-600 text-white join-item";
+    const btnProducerUnselected =
+      "btn bg-white border border-orange-500 text-orange-500 hover:border-green-100 hover:text-green-500 hover:bg-green-100 w-64 join-item";
+    const state = true;
+    setUser((user) => ({
+      ...user,
+      state: state,
+      btnMarket: btnMarketClicked,
+      bntProducer: btnProducerUnselected,
+      role: 3,
+      lastname: "Marketeur",
+    }));
+  };
+
+  if (user.state) {
+    firstLineInput = (
+      <div>
+        <div className=" relative rounded-md shadow-sm">
+          <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+            <User size={16} className="text-gray-600" />
+          </div>
+
+          <input
+            id="company"
+            name="firstname"
+            type="text"
+            placeholder="Company"
+            className="block w-full h-12 rounded-md border-0 py-1.5 pl-8 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-600 focus:ring-2 focus:ring-inset focus:ring-teal-300 sm:text-sm sm:leading-6"
+            value={user.firstname}
+            onChange={handleOnChange}
+          />
+        </div>
+        {<span className="text-error">{errors.firstname}</span>}
+      </div>
+    );
+  } else {
+    firstLineInput = (
+      <div className="grid grid-cols-1 gap-x-5 sm:grid-cols-2">
+        <div>
+          <div className=" relative rounded-md shadow-sm">
+            <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+              <User size={16} className="text-gray-600" />
+            </div>
+
+            <input
+              id="firstname"
+              name="firstname"
+              type="text"
+              placeholder="First name"
+              className="block w-full h-12 rounded-md border-0 py-1.5 pl-8 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-600 focus:ring-2 focus:ring-inset focus:ring-teal-300 sm:text-sm sm:leading-6"
+              value={user.firstname}
+              onChange={handleOnChange}
+            />
+          </div>
+          {<span className="text-error">{errors.firstname}</span>}
+        </div>
+
+        <div>
+          <div className=" relative rounded-md shadow-sm">
+            <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+              <User size={16} className="text-gray-600" />
+            </div>
+            <input
+              id="lastname"
+              name="lastname"
+              type="text"
+              placeholder="Last name"
+              className="block w-full h-12 rounded-md border-0 py-1.5 pl-8 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-600 focus:ring-2 focus:ring-inset focus:ring-teal-300 sm:text-sm sm:leading-6"
+              value={user.lastname}
+              onChange={handleOnChange}
+            />
+          </div>
+          {<span className="text-error">{errors.lastname}</span>}
+        </div>
+      </div>
+    );
+  }
 
   const handleOnSubmit = (e) => {
     e.preventDefault();
@@ -118,13 +222,13 @@ export default function Signup() {
         address: user.address,
         region: 1,
         country: 1,
-        role: 1,
+        role: user.role,
         password: user.password,
       })
-      .then((res) => {
+      .then(() => {
         console.log("ok");
       })
-      .catch((error) => {});
+      .catch(() => {});
 
     console.log(user);
   };
@@ -136,53 +240,26 @@ export default function Signup() {
   return (
     <div className="h-full">
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
-        <div className="sm:mx-auto sm:w-full sm:max-w-sm">
+        <div className="sm:mx-auto sm:w-full sm:max-w-lg">
+          <div className="join">
+            <Link onClick={handleClickProducer} className={user.bntProducer}>
+              Producteur
+            </Link>
+            <Link onClick={handleClickMarket} className={user.btnMarket}>
+              Supermarché
+            </Link>
+          </div>
+        </div>
+
+        <div className="sm:mx-auto sm:w-full sm:max-w-md">
           <h2 className="mt-6 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
             Create a new account
           </h2>
         </div>
 
-        <div className="mt-6 sm:mx-auto sm:w-full sm:max-w-sm">
+        <div className="mt-6 sm:mx-auto sm:w-full sm:max-w-lg">
           <form className="space-y-5" onSubmit={handleOnSubmit}>
-            <div className="grid grid-cols-1 gap-x-5 sm:grid-cols-2">
-              <div>
-                <div className=" relative rounded-md shadow-sm">
-                  <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                    <User size={16} className="text-gray-600" />
-                  </div>
-
-                  <input
-                    id="firstname"
-                    name="firstname"
-                    type="text"
-                    placeholder="First name"
-                    className="block w-full h-12 rounded-md border-0 py-1.5 pl-8 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-600 focus:ring-2 focus:ring-inset focus:ring-teal-300 sm:text-sm sm:leading-6"
-                    value={user.firstname}
-                    onChange={handleOnChange}
-                  />
-                </div>
-                {<span className="text-error">{errors.firstname}</span>}
-              </div>
-
-              <div>
-                <div className=" relative rounded-md shadow-sm">
-                  <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                    <User size={16} className="text-gray-600" />
-                  </div>
-                  <input
-                    id="lastname"
-                    name="lastname"
-                    type="text"
-                    placeholder="Last name"
-                    className="block w-full h-12 rounded-md border-0 py-1.5 pl-8 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-600 focus:ring-2 focus:ring-inset focus:ring-teal-300 sm:text-sm sm:leading-6"
-                    value={user.lastname}
-                    onChange={handleOnChange}
-                  />
-                </div>
-                {<span className="text-error">{errors.lastname}</span>}
-              </div>
-            </div>
-
+            {firstLineInput}
             <div>
               <div className="mt-2.5 relative rounded-md shadow-sm">
                 <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
