@@ -1,5 +1,7 @@
 import {
   EnvelopeSimple,
+  Eye,
+  EyeSlash,
   House,
   Lock,
   Phone,
@@ -126,6 +128,10 @@ export default function Signup() {
 
     console.log(user);
   };
+
+  const [showPassword, setShowPassword] = useState(false);
+
+  const toogleEye = () => setShowPassword((showPassword) => !showPassword);
 
   return (
     <div className="h-full">
@@ -266,25 +272,99 @@ export default function Signup() {
               </div>
             </div>
 
+            {/* <div>
+              <div className="mt-2.5 relative rounded-md shadow-sm join ">
+                <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                  <Lock size={16} className="text-gray-600" />
+                </div>
+
+                <input
+                  
+                  name="password"
+                  type="password"
+                  placeholder="Password"
+                  className="block w-full h-12 rounded-md border-0 py-1.5 pl-8 pr-8 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-600 focus:ring-2 focus:ring-inset focus:ring-teal-300 sm:text-sm sm:leading-6"
+                  value={user.password}
+                  onChange={handleOnChange}
+                />
+                <div id="eye"></div>
+              </div>
+              {<span className="text-error">{errors.password}</span>}
+            </div> */}
+
             <div>
-              <div className="mt-2.5 relative rounded-md shadow-sm">
+              <div className="relative mt-2 rounded-md shadow-sm">
                 <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
                   <Lock size={16} className="text-gray-600" />
                 </div>
                 <input
                   id="password"
+                  type={showPassword ? "text" : "password"}
                   name="password"
-                  type="password"
                   placeholder="Password"
-                  className="block w-full h-12 rounded-md border-0 py-1.5 pl-8 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-600 focus:ring-2 focus:ring-inset focus:ring-teal-300 sm:text-sm sm:leading-6"
+                  className="block w-full h-12 rounded-md border-0 py-1.5 pl-8 pr-8 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-600 focus:ring-2 focus:ring-inset focus:ring-teal-300 sm:text-sm sm:leading-6"
                   value={user.password}
                   onChange={handleOnChange}
                 />
+                <div className="absolute inset-y-0 right-4 flex items-center">
+                  <div>
+                    <EyeSlash
+                      onClick={toogleEye}
+                      id="eyeslash"
+                      className={"" + (showPassword && "hidden")}
+                      size={16}
+                      color="#9ca3af"
+                    />
+                    <Eye
+                      onClick={toogleEye}
+                      id="eye"
+                      className={"" + (!showPassword && "hidden")}
+                      size={16}
+                      color="#9ca3af"
+                    />
+                  </div>
+                </div>
               </div>
               {<span className="text-error">{errors.password}</span>}
             </div>
 
             <div>
+              <div className="relative mt-2 rounded-md shadow-sm">
+                <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                  <Lock size={16} className="text-gray-600" />
+                </div>
+                <input
+                  id="verifiedpassword"
+                  type={showPassword ? "text" : "password"}
+                  name="verifiedpassword"
+                  placeholder="Confirm password"
+                  className="block w-full h-12 rounded-md border-0 py-1.5 pl-8 pr-8 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-600 focus:ring-2 focus:ring-inset focus:ring-teal-300 sm:text-sm sm:leading-6"
+                  value={user.verifiedpassword}
+                  onChange={handleOnChange}
+                />
+                <div className="absolute inset-y-0 right-4 flex items-center">
+                  <div>
+                    <EyeSlash
+                      onClick={toogleEye}
+                      id="eyeslash"
+                      className={"" + (showPassword && "hidden")}
+                      size={16}
+                      color="#9ca3af"
+                    />
+                    <Eye
+                      onClick={toogleEye}
+                      id="eye"
+                      className={"" + (!showPassword && "hidden")}
+                      size={16}
+                      color="#9ca3af"
+                    />
+                  </div>
+                </div>
+              </div>
+              {<span className="text-error">{errors.verifiedpassword}</span>}
+            </div>
+
+            {/* <div>
               <div className="mt-2.5 relative rounded-md shadow-sm">
                 <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
                   <Lock size={16} className="text-gray-600" />
@@ -300,7 +380,7 @@ export default function Signup() {
                 />
               </div>
               {<span className="text-error">{errors.verifiedpassword}</span>}
-            </div>
+            </div> */}
 
             <div>
               <button
