@@ -1,7 +1,7 @@
 const validateField = (value, regex, errorMessage) => {
   let error = "";
   if (value === "") {
-    error = "Please fill this field.";
+    error = "* Champ obligatoire";
   } else if (!regex?.test(value)) {
     error = errorMessage;
   }

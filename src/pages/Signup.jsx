@@ -65,6 +65,7 @@ export default function Signup() {
       bntProducer: btnProducerClicked,
       btnMarket: btnMarketUnselected,
       role: 2,
+      lastname: "",
     }));
   };
 
@@ -89,15 +90,15 @@ export default function Signup() {
       <div>
         <div className=" relative rounded-md shadow-sm">
           <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-            <User size={16} className="text-gray-600" />
+            <User size={20} className="text-gray-600" />
           </div>
 
           <input
             id="company"
             name="firstname"
             type="text"
-            placeholder="Company"
-            className="block w-full h-12 rounded-md border-0 py-1.5 pl-8 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-600 focus:ring-2 focus:ring-inset focus:ring-teal-300 sm:text-sm sm:leading-6"
+            placeholder="Supermarché"
+            className="w-full pl-10 input input-bordered "
             value={user.firstname}
             onChange={handleOnChange}
           />
@@ -111,15 +112,15 @@ export default function Signup() {
         <div>
           <div className=" relative rounded-md shadow-sm">
             <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-              <User size={16} className="text-gray-600" />
+              <User size={20} className="text-gray-600" />
             </div>
 
             <input
               id="firstname"
               name="firstname"
               type="text"
-              placeholder="First name"
-              className="block w-full h-12 rounded-md border-0 py-1.5 pl-8 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-600 focus:ring-2 focus:ring-inset focus:ring-teal-300 sm:text-sm sm:leading-6"
+              placeholder="Prénom"
+              className="w-full pl-10 input input-bordered "
               value={user.firstname}
               onChange={handleOnChange}
             />
@@ -130,14 +131,14 @@ export default function Signup() {
         <div>
           <div className=" relative rounded-md shadow-sm">
             <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-              <User size={16} className="text-gray-600" />
+              <User size={20} className="text-gray-600" />
             </div>
             <input
               id="lastname"
               name="lastname"
               type="text"
-              placeholder="Last name"
-              className="block w-full h-12 rounded-md border-0 py-1.5 pl-8 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-600 focus:ring-2 focus:ring-inset focus:ring-teal-300 sm:text-sm sm:leading-6"
+              placeholder="Nom de famille"
+              className="w-full pl-10 input input-bordered "
               value={user.lastname}
               onChange={handleOnChange}
             />
@@ -171,7 +172,7 @@ export default function Signup() {
       email: validateField(
         user.email,
         emailRegex,
-        "Please enter a valid email address."
+        "Veuillez entrer une adresse email valide"
       ),
     }));
 
@@ -180,7 +181,7 @@ export default function Signup() {
       phone: validateField(
         user.phone,
         phoneRegex,
-        "Please enter a valid phone number."
+        "Veuillez entrer un numéro valide"
       ),
     }));
 
@@ -194,7 +195,7 @@ export default function Signup() {
       password: validateField(
         user.password,
         passwordRegex,
-        "Validate a strong password.(6 caracters minimum,20 maximum, with at least one uppercase letter, one lowercase letter, one number and one special character)"
+        "Mot de passe fort requis.(6 caractères minimum, 20 maximum, avec au moins: une lettre en majuscule, une lettre en minuscule, un nombre et un caractère spécial)"
       ),
     }));
 
@@ -206,7 +207,7 @@ export default function Signup() {
     if (user.password !== user.verifiedpassword) {
       setErrors((error) => ({
         ...error,
-        verifiedpassword: "The password doesn't match.",
+        verifiedpassword: "Le mot de passe ne correspond pas",
       }));
     } else {
       setErrors((error) => ({ ...error, verifiedpassword: "" }));
@@ -243,7 +244,7 @@ export default function Signup() {
         <div className="sm:mx-auto sm:w-full sm:max-w-lg">
           <div className="join">
             <Link onClick={handleClickProducer} className={user.bntProducer}>
-              Producteur
+              Agriculteur
             </Link>
             <Link onClick={handleClickMarket} className={user.btnMarket}>
               Supermarché
@@ -253,7 +254,7 @@ export default function Signup() {
 
         <div className="sm:mx-auto sm:w-full sm:max-w-md">
           <h2 className="mt-6 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
-            Create a new account
+            Créer un nouveau compte
           </h2>
         </div>
 
@@ -263,15 +264,15 @@ export default function Signup() {
             <div>
               <div className="mt-2.5 relative rounded-md shadow-sm">
                 <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                  <EnvelopeSimple size={16} className="text-gray-600" />
+                  <EnvelopeSimple size={20} className="text-gray-600" />
                 </div>
                 <input
                   id="email"
                   name="email"
                   type="text"
                   autoComplete="email"
-                  placeholder="E-mail"
-                  className="block w-full h-12 rounded-md border-0 py-1.5 pl-8 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-600 focus:ring-2 focus:ring-inset focus:ring-teal-300 sm:text-sm sm:leading-6"
+                  placeholder="Adresse email"
+                  className="w-full pl-10 input input-bordered "
                   value={user.email}
                   onChange={handleOnChange}
                 />
@@ -282,14 +283,14 @@ export default function Signup() {
             <div>
               <div className="mt-2.5 relative rounded-md shadow-sm">
                 <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                  <Phone size={16} className="text-gray-600" />{" "}
+                  <Phone size={20} className="text-gray-600" />{" "}
                 </div>
                 <input
                   id="phone"
                   name="phone"
                   type="text"
-                  placeholder="Phone Number"
-                  className="block w-full h-12 rounded-md border-0 py-1.5 pl-8 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-600 focus:ring-2 focus:ring-inset focus:ring-teal-300 sm:text-sm sm:leading-6"
+                  placeholder="Numéro téléphone"
+                  className="w-full pl-10 input input-bordered "
                   value={user.phone}
                   onChange={handleOnChange}
                 />
@@ -300,14 +301,14 @@ export default function Signup() {
             <div>
               <div className="mt-2.5 relative rounded-md shadow-sm">
                 <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                  <House size={16} className="text-gray-600" />{" "}
+                  <House size={20} className="text-gray-600" />{" "}
                 </div>
                 <input
                   id="address"
                   name="address"
                   type="text"
-                  placeholder="Address"
-                  className="block w-full h-12 rounded-md border-0 py-1.5 pl-8 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-600 focus:ring-2 focus:ring-inset focus:ring-teal-300 sm:text-sm sm:leading-6"
+                  placeholder="Adresse"
+                  className="w-full pl-10 input input-bordered "
                   value={user.address}
                   onChange={handleOnChange}
                 />
@@ -325,7 +326,7 @@ export default function Signup() {
                     className="select h-12 select-bordered select-sm w-full block rounded-md border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-600 sm:text-sm sm:leading-6"
                   >
                     <option disabled value="">
-                      Choose Region
+                      Pays
                     </option>
                     <option>Han Solo</option>
                     <option>{un}</option>
@@ -341,45 +342,24 @@ export default function Signup() {
                     name="country"
                     className="select select-bordered select-sm w-full block rounded-md border-0 h-12 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-600 sm:text-sm sm:leading-6"
                   >
-                    <option disabled value="Choose country"></option>
+                    <option disabled value="">Région</option>
                     <option>Han Solo</option>
                     <option>{un}</option>
                   </select>
                 </div>
               </div>
             </div>
-
-            {/* <div>
-              <div className="mt-2.5 relative rounded-md shadow-sm join ">
-                <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                  <Lock size={16} className="text-gray-600" />
-                </div>
-
-                <input
-                  
-                  name="password"
-                  type="password"
-                  placeholder="Password"
-                  className="block w-full h-12 rounded-md border-0 py-1.5 pl-8 pr-8 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-600 focus:ring-2 focus:ring-inset focus:ring-teal-300 sm:text-sm sm:leading-6"
-                  value={user.password}
-                  onChange={handleOnChange}
-                />
-                <div id="eye"></div>
-              </div>
-              {<span className="text-error">{errors.password}</span>}
-            </div> */}
-
             <div>
               <div className="relative mt-2 rounded-md shadow-sm">
                 <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                  <Lock size={16} className="text-gray-600" />
+                  <Lock size={20} className="text-gray-600" />
                 </div>
                 <input
                   id="password"
                   type={showPassword ? "text" : "password"}
                   name="password"
-                  placeholder="Password"
-                  className="block w-full h-12 rounded-md border-0 py-1.5 pl-8 pr-8 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-600 focus:ring-2 focus:ring-inset focus:ring-teal-300 sm:text-sm sm:leading-6"
+                  placeholder="Mot de passe"
+                  className="w-full pl-10 input input-bordered ing-6"
                   value={user.password}
                   onChange={handleOnChange}
                 />
@@ -389,14 +369,14 @@ export default function Signup() {
                       onClick={toogleEye}
                       id="eyeslash"
                       className={"" + (showPassword && "hidden")}
-                      size={16}
+                      size={20}
                       color="#9ca3af"
                     />
                     <Eye
                       onClick={toogleEye}
                       id="eye"
                       className={"" + (!showPassword && "hidden")}
-                      size={16}
+                      size={20}
                       color="#9ca3af"
                     />
                   </div>
@@ -408,14 +388,14 @@ export default function Signup() {
             <div>
               <div className="relative mt-2 rounded-md shadow-sm">
                 <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                  <Lock size={16} className="text-gray-600" />
+                  <Lock size={20} className="text-gray-600" />
                 </div>
                 <input
                   id="verifiedpassword"
                   type={showPassword ? "text" : "password"}
                   name="verifiedpassword"
-                  placeholder="Confirm password"
-                  className="block w-full h-12 rounded-md border-0 py-1.5 pl-8 pr-8 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-600 focus:ring-2 focus:ring-inset focus:ring-teal-300 sm:text-sm sm:leading-6"
+                  placeholder="Confirmation mot de passe"
+                  className="w-full pl-10 input input-bordered ing-6"
                   value={user.verifiedpassword}
                   onChange={handleOnChange}
                 />
@@ -425,14 +405,14 @@ export default function Signup() {
                       onClick={toogleEye}
                       id="eyeslash"
                       className={"" + (showPassword && "hidden")}
-                      size={16}
+                      size={20}
                       color="#9ca3af"
                     />
                     <Eye
                       onClick={toogleEye}
                       id="eye"
                       className={"" + (!showPassword && "hidden")}
-                      size={16}
+                      size={20}
                       color="#9ca3af"
                     />
                   </div>
@@ -440,44 +420,15 @@ export default function Signup() {
               </div>
               {<span className="text-error">{errors.verifiedpassword}</span>}
             </div>
-
-            {/* <div>
-              <div className="mt-2.5 relative rounded-md shadow-sm">
-                <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                  <Lock size={16} className="text-gray-600" />
-                </div>
-                <input
-                  id="verifiedpassword"
-                  name="verifiedpassword"
-                  type="password"
-                  placeholder="Confirm Password"
-                  className="block w-full h-12 rounded-md border-0 py-1.5 pl-8 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-600 focus:ring-2 focus:ring-inset focus:ring-teal-300 sm:text-sm sm:leading-6"
-                  value={user.verifiedpassword}
-                  onChange={handleOnChange}
-                />
-              </div>
-              {<span className="text-error">{errors.verifiedpassword}</span>}
-            </div> */}
-
             <div>
               <button
                 type="submit"
-                className="flex h-12 w-full justify-center rounded-md bg-violet-800 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                className="btn flex h-12 w-full justify-center rounded-md bg-violet-800 px-3 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
-                Sign in
+                S&apos;inscrire
               </button>
             </div>
           </form>
-
-          <p className="mt-10 text-center text-sm text-gray-500">
-            Not a member?
-            <a
-              href="#"
-              className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
-            >
-              Start a 14 day free trial
-            </a>
-          </p>
         </div>
       </div>
     </div>
