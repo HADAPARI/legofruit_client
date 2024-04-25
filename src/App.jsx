@@ -32,18 +32,14 @@ const App = () => {
           path: "signin", 
           element: <Signin/>,
         },
-<<<<<<< HEAD
         { 
           path: "account/activation/:token", 
           element: <Activation/>,
-        }
-=======
+        },
         {
           path: "profile",
           element: <Profile/>,
         },
-
->>>>>>> antonio
       ]
     }
   ])

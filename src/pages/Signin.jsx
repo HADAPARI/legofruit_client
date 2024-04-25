@@ -1,10 +1,15 @@
 
-import React, { useState } from "react";
 import axios from "axios";
 import logo from "../assets/images/logo.png";
 import Validation from "../components/validation";
+import { EnvelopeSimple, Eye, EyeSlash, Lock } from "@phosphor-icons/react";
+import { useState } from "react";
 
 const Signin = () => {
+  const BASE_URL = import.meta.env.VITE_BASE_URL;
+  const [showPassword, setShowPassword] = useState(false);
+
+  const toogleEye = () => setShowPassword((showPassword) => !showPassword);
   const [values, setValues] = useState({
     email: "",
     password: ""
@@ -62,7 +67,7 @@ const Signin = () => {
                     autoComplete="email"
                     placeholder="Adresse email"
                     className="w-full pl-10 input input-bordered "
-                    value={user.email}
+                    value={values.email}
                     onChange={handleInput}
                   />
                 </div>
@@ -80,7 +85,7 @@ const Signin = () => {
                     name="password"
                     placeholder="Mot de passe"
                     className="w-full pl-10 input input-bordered ing-6"
-                    value={user.password}
+                    value={values.password}
                     onChange={handleInput}
                   />
                   <div className="absolute inset-y-0 right-4 flex items-center">
