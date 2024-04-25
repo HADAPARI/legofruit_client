@@ -5,6 +5,7 @@ import ErrorPage from "./pages/ErrorPage";
 import Home from "./pages/Home";
 import Signin from "./pages/Signin";
 import Signup from "./pages/Signup";
+import Profile from "./pages/Profile";
 // import { decrement, increment } from "./redux/reducers/counterSlice";
 import { createBrowserRouter, RouterProvider } from "react-router-dom"
 
@@ -31,10 +32,18 @@ const App = () => {
           path: "signin", 
           element: <Signin/>,
         },
+<<<<<<< HEAD
         { 
           path: "account/activation/:token", 
           element: <Activation/>,
         }
+=======
+        {
+          path: "profile",
+          element: <Profile/>,
+        },
+
+>>>>>>> antonio
       ]
     }
   ])

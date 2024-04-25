@@ -4,6 +4,7 @@ import Header from "./Header";
 import Footer from "./Footer";
 
 const Root = () => {
+
   return (
     <>
       <Header/>
@@ -14,3 +15,4 @@ const Root = () => {
 };
 
 export default Root;
+
