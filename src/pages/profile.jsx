@@ -1,133 +1,164 @@
 import React from "react";
 import Home from "../assets/images/home.jpg"
+import { useState } from "react";
 
 const Profile = () => {
 
+    const [isEditable, setIsEditable] = useState(false);
+    const toggleEdit = () => {
+          setIsEditable(!isEditable);
+    };
+
+
     return (
-      <>
-        <div className="conteneur">
-            <div className="grid grid-cols-1 divide-y">
-            <div className="bg-gray-200 py-4 h-50 ">
-                   <h1 className="ml-10 text-left text-4xl font-bold">PROFILE</h1>
-                </div>
-                <div className="grid min-h-screen ">
-                    <div className="bg-white py-4 h-200 ">
-                        <div className="ml-20 grid grid-cols-2 divide-x">
-                            <div className="grid grid-cols-1 divide-y">
-                                <div>
-                                    <img className="h-20" src={Home} alt="Profile"/>  
-                                </div>  
-                                <div>                      
-                                    <h1 className="font-bold text-left text-1xl">Mahanitia</h1>
-                                </div>
-                            </div>                        
-                        <div className="mr-20 mt-5 text-right">
-                            <button type="submit" className="text-right rounded-md
-                                bg-violet-600 px-3 py-1.5 text-sm font-semibold leading-6
-                                text-white shadow-sm
-                                hover:bg-violet-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2
-                                focus-visible:outline-violet-600">Modifier</button>
-                        </div>   
-                        </div>                     
-                    </div>
-                    <div className="bg-white py-4 h-200 ml-20 mr-20">
-                    <div className="mt-1 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-                        <div className="sm:col-span-3">
-                        <label for="first-name" class="block text-sm font-medium leading-6 text-gray-900">First name</label>
-                        <div className="mt-2">
-                            <input type="text" name="first-name" id="first-name" autocomplete="given-name" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"/>
-                        </div>
-                        </div>
-
-                        <div className="sm:col-span-3">
-                        <label for="last-name" class="block text-sm font-medium leading-6 text-gray-900">Last name</label>
-                        <div className="mt-2">
-                            <input type="text" name="last-name" id="last-name" autocomplete="family-name" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"/>
-                        </div>
-                        </div>
-
-                        <div className="sm:col-span-full">
-                        <label for="email" className="block text-sm font-medium leading-6 text-gray-900">Email address</label>
-                        <div className="mt-2">
-                            <input id="email" name="email" type="email" autocomplete="email" placeholder="example@gmail.com " class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"/>
-                        </div>
-                        </div>
-                        </div>
-                    </div>
-                    <div className="bg-white py-4 h-200 ml-20 mr-20">
-                    <div className="mt-1 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-                    <div className="col-span-full">
-                        <label for="country" class="block text-sm font-medium leading-6 text-gray-900">City</label>
-                        <div className="mt-2">
-                            <select id="country" name="country" autocomplete="country-name" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6">
-                            <option>Antananarivo </option>
-                            <option>Fianarantsoa</option>
-                            <option>Toamasina</option>
-                            <option>Mahajanga</option>
-                            <option>Toliara</option>
-                            <option>Antsiranana</option>
-                            </select>
-                        </div>
-                        </div>
-
-                        <div className="sm:col-span-2 sm:col-start-1">
-                        <label for="city" class="block text-sm font-medium leading-6 text-gray-900">Street address</label>
-                        <div className="mt-2">
-                            <input type="text" name="city" id="city" autocomplete="address-level2" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"/>
-                        </div>
-                        </div>
-
-                        <div className="sm:col-span-2">
-                        <label for="region" class="block text-sm font-medium leading-6 text-gray-900">State / Province</label>
-                        <div className="mt-2">
-                            <input type="text" name="region" id="region" autocomplete="address-level1" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"/>
-                        </div>
-                        </div>
-
-                        <div className="sm:col-span-2">
-                        <label for="postal-code" class="block text-sm font-medium leading-6 text-gray-900">ZIP / Postal code</label>
-                        <div className="mt-2">
-                            <input type="text" name="postal-code" id="postal-code" autocomplete="postal-code" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"/>
-                        </div>
-                        </div>
-                    </div>                        
-                    </div>
-                    <div className="bg-gray-200 py-4 h-100 ml-20 mr-20">
-                    <div className="mt-1 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-
-                        <div className="sm:col-span-2 sm:col-start-1">
-                            <article class="text-wrap ...">
-                            <h1 className="ml-5 text-left font-bold text-2xl">Supprimer</h1>
-                            <p className="ml-5 text-left">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt </p>
-                            </article>
-                            <button type="submit" className="ml-5 mt-5 text-right rounded-md
-                                bg-violet-600 px-3 py-1.5 text-sm font-semibold leading-6
-                                text-white shadow-sm
-                                hover:bg-violet-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2
-                                focus-visible:outline-violet-600">Deconnecter</button>
-                        </div>
-
-                        <div className="sm:col-span-2">                        
-                        <div className="mt-2">
-                            <input type="text" name="region" id="region" autocomplete="address-level1" className="mt-10 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"/>
-                        </div>
-                        </div>
-
-                        <div className="sm:col-span-2 mr-5">
-                        <button type="submit" className="w-full mt-10 text-center rounded-md
-                                bg-red-600 px-3 py-1.5 text-sm font-bold leading-6
-                                text-white shadow-sm
-                                hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2
-                                focus-visible:outline-red-600">Supprimer</button>
-                        </div>
-                    </div> 
-
-                    </div>
-                </div>
-            </div>
-        </div>
-      </>
-    )
-  }
+      <div className="px-4 lg:px-60">
+        <b>
+          <h1 className="text-4xl pt-10 pb-16 ">Profile</h1>
+        </b>
   
-  export default Profile
+        <div className="flex flex-col lg:flex-row justify-between items-center space-y-4 lg:space-y-0 lg:space-x-4 pb-10">
+          <div className="flex items-center space-x-2 mt-4">
+            <img
+              className="inline-block h-36 w-36 rounded-full ring-2 ring-white"
+              src={Home}
+              alt=""
+            />
+            <div className="flex flex-col ps-3">
+              <div className="flex items-center ">
+                <b>
+                  <span className="text-gray-600">Note:</span>
+                </b>
+                <span className="ml-2 text-yellow-400">4.5</span>
+              </div>
+              <div className="flex items-center space-x-1">
+                {[...Array(5)].map((_, index) => (
+                  <svg
+                    key={index}
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-5 w-5 text-yellow-400"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M5.57 2.156a.75.75 0 01.946.446L10 8.437l3.482-5.835a.75.75 0 111.292.765l-4.583 7.67 4.994 5.993a.75.75 0 01-.46 1.263l-6.25.774-2.478 5.25a.75.75 0 01-1.376-.658l3.234-6.857-4.163-5.002a.75.75 0 01.236-.99l5.25-4.166z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                ))}
+              </div>
+            </div>
+          </div>
+  
+          <button
+              onClick={toggleEdit}
+              className="text-right rounded-md
+              bg-violet-600 px-3 py-1.5 text-sm font-semibold leading-6
+              text-white shadow-sm
+              hover:bg-violet-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2
+              focus-visible:outline-violet-600">{isEditable ? "Save" : "Edit"}
+          </button>
+        </div>
+  
+        <div className="border rounded-lg p-4 mb-8">
+          <h2 className="text-lg font-semibold mb-4">Personal Information</h2>
+          <div className="flex flex-col lg:flex-row justify-between space-y-4 lg:space-y-0 lg:space-x-2">
+            <div className="overflow-hidden">
+              <label htmlFor="first-name" className="block text-sm font-medium leading-6 text-gray-900">First Name</label>
+              <div className="mt-2">
+                <input                  
+                  type="text"
+                  name="first-name"
+                  id="first-name"
+                  style={{ width: "450px" }}
+                  autoComplete="given-name"
+                  disabled={!isEditable}
+                  className="block lg:w-96 p-4 h-12 rounded-md py-1.5 border-2 focus:border-transparent focus:outline-none focus:ring-1 focus:ring-inset focus:ring-green-600"/>
+              </div>
+            </div>
+  
+            <div className="overflow-hidden ms-0">
+              <label htmlFor="last-name" className="block text-sm font-medium leading-6 text-gray-900">Last Name</label>
+              <div className="mt-2">
+                <input
+                  type="text"
+                  name="last-name"
+                  id="last-name"
+                  autoComplete="family-name"
+                  style={{ width: "450px" }}
+                  disabled={!isEditable}
+                  className="block lg:w-96 p-4 h-12 rounded-md py-1.5 border-2 focus:border-transparent focus:outline-none focus:ring-1 focus:ring-inset focus:ring-green-600"/>
+              </div>
+            </div>
+          </div>
+          <br />
+          {/* Nouvelle section pour les deux champs d'entrée en bas */}
+          <div className="flex flex-col lg:flex-row justify-between space-y-4 lg:space-y-0 lg:space-x-2">
+            <div className="overflow-hidden">
+              <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">Email</label>
+              <div className="mt-2">
+                <input
+                  type="email"
+                  name="email"
+                  id="email"
+                  style={{ width: "450px" }}
+                  autoComplete="email"
+                  disabled={!isEditable}
+                  className="block lg:w-96 p-4 h-12 rounded-md py-1.5 border-2 focus:border-transparent focus:outline-none focus:ring-1 focus:ring-inset focus:ring-green-600"/>
+              </div>
+            </div>
+  
+            <div className="overflow-hidden ms-0">
+              <label htmlFor="phone" className="block text-sm font-medium leading-6 text-gray-900">Phone</label>
+              <div className="mt-2">
+                <input
+                  type="text"
+                  name="phone"
+                  id="phone"
+                  autoComplete="tel"
+                  style={{ width: "450px" }}
+                  disabled={!isEditable}
+                  className="block lg:w-96 p-4 h-12 rounded-md py-1.5 border-2 focus:border-transparent focus:outline-none focus:ring-1 focus:ring-inset focus:ring-green-600"/>
+              </div>
+            </div>
+          </div>
+        </div>
+  
+        {/* Deuxième section de rectangle */}
+        <div className="border rounded-lg p-4 mb-8">
+          <h2 className="text-lg font-semibold mb-4">Adress</h2>
+          <div className="flex flex-col lg:flex-row justify-between space-y-4 lg:space-y-0 lg:space-x-2">
+            <div className="overflow-hidden">
+              <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">Country</label>
+              <div className="mt-2">
+                <input
+                  type="email"
+                  name="email"
+                  id="email"
+                  style={{ width: "450px" }}
+                  autoComplete="email"
+                  disabled={!isEditable}
+                  className="block lg:w-96 p-4 h-12 rounded-md py-1.5 border-2 focus:border-transparent focus:outline-none focus:ring-1 focus:ring-inset focus:ring-green-600"/>
+              </div>
+            </div>
+  
+            <div className="overflow-hidden ms-0">
+              <label htmlFor="phone" className="block text-sm font-medium leading-6 text-gray-900">Region</label>
+              <div className="mt-2">
+                <input
+                  type="text"
+                  name="phone"
+                  id="phone"
+                  autoComplete="tel"
+                  style={{ width: "450px" }}
+                  disabled={!isEditable}
+                  className="block lg:w-96 p-4 h-12 rounded-md py-1.5 border-2 focus:border-transparent focus:outline-none focus:ring-1 focus:ring-inset focus:ring-green-600"/>
+              </div>
+            </div>
+          </div>{" "}
+        </div>
+      </div>
+    );
+  };
+  
+  export default Profile;  

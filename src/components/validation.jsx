@@ -6,12 +6,12 @@
 
 
     if(!email_pattern.test(values.email)){
-        errors.email = "Email did not match"
+        errors.email = "L’adresse e-mail ne correspondait pas"
     }
 
  
     if(!password_pattern.test(values.password)){
-        errors.password = "Password did not match"
+        errors.password = "Le mot de passe ne correspond pas"
     }
 
     return errors;
