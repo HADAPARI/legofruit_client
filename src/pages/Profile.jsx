@@ -20,7 +20,7 @@ const Profile = () => {
     const fetchProfileData = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:9000/user/profile/38abac16-1a29-452d-b58d-39100ea76616"
+          "http://localhost:9000/user/profile/2e801296-3066-4aa7-9fe1-8b64c0ff726c"
         );
         console.log(response);
         if (response.status === 200) {
@@ -162,7 +162,7 @@ const Profile = () => {
               htmlFor="email"
               className="block text-sm font-medium leading-6 text-gray-600"
             >
-              Email
+              Adresse email
             </label>
             <div className="mt-2">
               <input
@@ -203,7 +203,7 @@ const Profile = () => {
 
       {/* Deuxième section de rectangle */}
       <div className="border rounded-lg p-4 mb-8">
-        <h2 className="text-lg font-semibold mb-4">Adresse</h2>
+        <h2 className="text-lg font-semibold mb-4">Localisation</h2>
         <div className="flex flex-col lg:flex-row justify-between space-y-4 lg:space-y-0 lg:space-x-2">
           <div className="overflow-hidden">
             <label
