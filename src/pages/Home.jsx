@@ -267,19 +267,23 @@ const Home = () => {
             <Testimonie
               text="Collaborer avec cette entreprise a été une véritable bouffée d'air frais pour mon exploitation.
              Leur engagement envers la durabilité et la qualité des produits est admirable."
+             star={4}
             />
             <Testimonie
               text="Ensemble, nous offrons à nos clients des produits de la plus haute qualité,
               tout en soutenant nos agriculteurs locaux et en promouvant une consommation responsable."
+              star={5}
             />
             <Testimonie
               text="Leur partenariat nous permet d'écouler nos produits de manière responsable et de faire connaître notre travail au sein de la 
             communauté. C'est une collaboration dont nous sommes fiers et qui apporte de réels avantages à notre ferme."
+            star={3}
             />
             <Testimonie
               text="Leur engagement envers la traçabilité et la durabilité des produits est un véritable atout pour notre enseigne.
              Ensemble, nous offrons à nos clients une expérience d'achat authentique et responsable, 
              tout en soutenant l'économie locale et en valorisant le travail de nos agriculteurs."
+             star={5}
             />
           </div>
         </div>

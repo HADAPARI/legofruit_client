@@ -26,7 +26,7 @@ const Activation = () => {
 
   return (
     <div>
-      {isActivated != null && (<div className="h-screen w-screen flex flex-col justify-center items-center gap-3">
+      {isActivated != null && (<div className="py-40 w-screen flex flex-col justify-center items-center gap-3">
         <div
           className={
             "text-white rounded-full " +
@@ -44,7 +44,7 @@ const Activation = () => {
             ? "Votre compte a été bien activaté !"
             : "Echec d'activation de compte"}
         </h1>
-        <Link to="/signin" className="btn btn-primary w-52 mt-10">
+        <Link to="/signin" className="btn bg-violet-800 hover:bg-violet-900 text-white w-52 mt-10">
           Se connecter
         </Link>
       </div>)}

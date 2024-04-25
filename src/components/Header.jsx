@@ -30,21 +30,38 @@ const Header = () => {
             <MagnifyingGlass size={20} />
           </label>
         </div>
-        <button className="btn btn-ghost hover:bg-gray-100 flex items-center gap-3">
-          <ShoppingBagOpen size={32} />
-          <div>
-            <div>Mon Panier</div>
-            <div className="text-orange-500 text-start mt-2">$0.00</div>
-          </div>
-        </button>
-        <div className="flex items-center gap-3">
-          <div className="avatar">
-            <div className="w-10 rounded-full">
-              <img src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+
+        <div className="flex gap-3">
+          <button className="btn btn-ghost hover:bg-gray-100 flex items-center gap-3">
+            <ShoppingBagOpen size={32} />
+            <div>
+              <div>Mon Panier</div>
+              <div className="text-orange-500 text-start mt-2">$0.00</div>
             </div>
+          </button>
+          <div className="join">
+            <Link
+              to="/signin"
+              className="btn btn-outline w-32 border-orange-500 hover:bg-violet-800 hover:border-violet-800 hover:text-white join-item"
+            >
+              Se connecter
+            </Link>
+            <Link
+              to="/signup"
+              className="btn bg-orange-500 border border-orange-500 text-white hover:bg-orange-600 w-32 join-item"
+            >
+              S&apos;inscrire
+            </Link>
           </div>
-          <div className="text-gray-400">Anonyme</div>
-          <CaretDown size={12} />
+          <div className="hidden items-center gap-3">
+            <div className="avatar">
+              <div className="w-10 rounded-full">
+                <img src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+              </div>
+            </div>
+            <div className="text-gray-400">Anonyme</div>
+            <CaretDown size={12} />
+          </div>
         </div>
       </div>
 
@@ -79,7 +96,9 @@ const Header = () => {
             </li>
             <li>
               <Link to="/bestsales">
-                <Bull text="Chaud" type="error">Meilleures ventes</Bull>
+                <Bull text="Chaud" type="error">
+                  Meilleures ventes
+                </Bull>
               </Link>
             </li>
             <li>
@@ -94,20 +113,6 @@ const Header = () => {
           <div className="flex items-center gap-3 font-semibold">
             <Headphones size={20} className="text-orange-500" />
             (+261) 34 63 465 65
-          </div>
-          <div className="join">
-            <Link
-              to="/signin"
-              className="btn btn-outline w-36 border-orange-500 hover:bg-violet-800 hover:border-violet-800 hover:text-white join-item"
-            >
-              Se connecter
-            </Link>
-            <Link
-              to="/signup"
-              className="btn bg-orange-500 border border-orange-500 text-white hover:bg-orange-600 w-36 join-item"
-            >
-              S&apos;inscrire
-            </Link>
           </div>
         </div>
       </div>
