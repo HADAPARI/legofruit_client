@@ -1,4 +1,7 @@
 
+import { useDispatch } from "react-redux";
+import { set } from "../redux/reducers/userSlice";
+
 import axios from "axios";
 import logo from "../assets/images/logo.png";
 import Validation from "../components/validation";
@@ -7,6 +10,8 @@ import { useState } from "react";
 
 const Signin = () => {
   const BASE_URL = import.meta.env.VITE_BASE_URL;
+  const dispatch = useDispatch();
+
   const [showPassword, setShowPassword] = useState(false);
 
   const toogleEye = () => setShowPassword((showPassword) => !showPassword);
