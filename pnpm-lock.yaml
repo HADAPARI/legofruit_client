@@ -67,7 +67,7 @@ importers:
         specifier: ^3.4.3
         version: 3.4.3
       vite:
-        specifier: ^5.2.0
+        specifier: ^5.2.10
         version: 5.2.10
 
 packages:

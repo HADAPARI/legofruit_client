@@ -10,7 +10,6 @@ import Profile from "./pages/Profile";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 const App = () => {
-
   // const count = useSelector((state) => state.counter.value);
   // const dispatch = useDispatch();
 
@@ -28,26 +27,13 @@ const App = () => {
           path: "signup",
           element: <Signup />,
         },
-<<<<<<< HEAD
-        { 
-          path: "signin", 
-          element: <Signin/>,
-        },
-        { 
-          path: "account/activation/:token", 
-          element: <Activation/>,
-        },
-        {
-          path: "profile",
-          element: <Profile/>,
-        },
-      ]
-    }
-  ])
-=======
         {
           path: "signin",
           element: <Signin />,
+        },
+        {
+          path: "account/activation/:token",
+          element: <Activation />,
         },
         {
           path: "profile",
@@ -56,7 +42,6 @@ const App = () => {
       ],
     },
   ]);
->>>>>>> mahanitia
 
   return (
     <RouterProvider router={router} />

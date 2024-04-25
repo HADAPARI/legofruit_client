@@ -16,11 +16,22 @@ const Profile = () => {
     address: "",
   });
 
+  const [editingData, setEditingData] = useState({
+    firstname: "",
+    lastname: "",
+    email: "",
+    phone: "",
+    country: "",
+    region: "",
+    role: "",
+    address: "",
+  });
+
   useEffect(() => {
     const fetchProfileData = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:9000/user/profile/2e801296-3066-4aa7-9fe1-8b64c0ff726c"
+          "http://localhost:9000/user/profile/828b841b-a708-4675-9ae5-16f5359226ff"
         );
         console.log(response);
         if (response.status === 200) {
@@ -36,10 +47,28 @@ const Profile = () => {
     fetchProfileData();
   }, []);
 
+  const [isEditable, setIsEditable] = useState(false);
+  const toggleEdit = () => {
+    setIsEditable(!isEditable);
+    if (!isEditable) {
+      setEditingData(profileData);
+    } else {
+      setProfileData(editingData);
+    }
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setEditingData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
   return (
     <div className="px-4 lg:px-60">
       <b>
-        <h1 className="text-4xl pt-10 pb-5 ">My profile</h1>
+        <h1 className="text-4xl pt-5 pb-5 ">My profile</h1>
       </b>
 
       <div className="flex flex-col lg:flex-row justify-between items-center space-y-4 lg:space-y-0 lg:space-x-4 pb-10">
@@ -103,8 +132,11 @@ const Profile = () => {
           </div>
         </div>
         <div className="" style={{ marginTop: "60px" }}>
-          <button className="btn btn-outline w-36 border-orange-500 bg-orange-500 hover:bg-orange-600 hover:border-orange-600 text-white join-item">
-            Modify
+          <button
+            onClick={toggleEdit}
+            className="btn btn-outline w-36 border-orange-500 bg-orange-500 hover:bg-orange-600 hover:border-orange-600 text-white join-item"
+          >
+            {isEditable ? "Save" : "Edit"}
           </button>
         </div>
       </div>
@@ -119,18 +151,19 @@ const Profile = () => {
             >
               Nom
             </label>
-            <div className="mt-2">
-              <input
-                value={profileData.firstname}
-                type="text"
-                name="first-name"
-                id="first-name"
-                style={{ width: "450px" }}
-                autoComplete="given-name"
-                className="block lg:w-96 p-4 h-12 rounded-md py-1.5 font-bold"
-                disabled
-              />
-            </div>
+            <input
+              value={isEditable ? editingData.firstname : profileData.firstname}
+              type="text"
+              name="firstname"
+              id="first-name"
+              style={{ width: "450px" }}
+              autoComplete="given-name"
+              className={`block lg:w-96 p-4 h-12 rounded-md py-1.5  border-2 focus:border-transparent focus:outline-none focus:ring-1 focus:ring-inset focus:ring-green-600 ${
+                isEditable ? "" : "border-white font-bold "
+              }`}
+              disabled={!isEditable}
+              onChange={handleChange}
+            />
           </div>
 
           <div className="overflow-hidden ms-0">
@@ -140,16 +173,19 @@ const Profile = () => {
             >
               Prénom
             </label>
-            <div className="mt-2">
+            <div className="">
               <input
-                value={profileData.lastname}
+                value={isEditable ? editingData.lastname : profileData.lastname}
                 type="text"
-                name="last-name"
+                name="lastname"
                 id="last-name"
                 style={{ width: "450px" }}
                 autoComplete="given-name"
-                className="block lg:w-96 p-4 h-12 rounded-md py-1.5 font-bold"
-                disabled
+                className={`block lg:w-96 p-4 h-12 rounded-md py-1.5  border-2 focus:border-transparent focus:outline-none focus:ring-1 focus:ring-inset focus:ring-green-600 ${
+                  isEditable ? "" : "border-white font-bold "
+                }`}
+                disabled={!isEditable}
+                onChange={handleChange}
               />
             </div>
           </div>
@@ -166,14 +202,17 @@ const Profile = () => {
             </label>
             <div className="mt-2">
               <input
-                value={profileData.email}
+                value={isEditable ? editingData.email : profileData.email}
                 type="text"
-                name="Email"
-                id="Email"
+                name="email"
+                id="email"
                 style={{ width: "450px" }}
                 autoComplete="given-name"
-                className="block lg:w-96 p-4 h-12 rounded-md py-1.5 font-bold"
-                disabled
+                className={`block lg:w-96 p-4 h-12 rounded-md py-1.5  border-2 focus:border-transparent focus:outline-none focus:ring-1 focus:ring-inset focus:ring-green-600 ${
+                  isEditable ? "" : "border-white font-bold "
+                }`}
+                disabled={!isEditable}
+                onChange={handleChange}
               />
             </div>
           </div>
@@ -187,14 +226,17 @@ const Profile = () => {
             </label>
             <div className="mt-2">
               <input
-                value={profileData.phone}
+                value={isEditable ? editingData.phone : profileData.phone}
                 type="text"
-                name="Phone"
-                id="Phone"
+                name="phone"
+                id="phone"
                 style={{ width: "450px" }}
                 autoComplete="given-name"
-                className="block lg:w-96 p-4 h-12 rounded-md py-1.5  font-bold"
-                disabled
+                className={`block lg:w-96 p-4 h-12 rounded-md py-1.5  border-2 focus:border-transparent focus:outline-none focus:ring-1 focus:ring-inset focus:ring-green-600 ${
+                  isEditable ? "" : "border-white font-bold "
+                }`}
+                disabled={!isEditable}
+                onChange={handleChange}
               />
             </div>
           </div>
@@ -214,14 +256,17 @@ const Profile = () => {
             </label>
             <div className="mt-2">
               <input
-                value={profileData.country}
+                value={isEditable ? editingData.country : profileData.country}
                 type="text"
                 name="country"
                 id="country"
                 style={{ width: "450px" }}
                 autoComplete="given-name"
-                className="block lg:w-96 p-4 h-12 rounded-md py-1.5 font-bold"
-                disabled
+                className={`block lg:w-96 p-4 h-12 rounded-md py-1.5  border-2 focus:border-transparent focus:outline-none focus:ring-1 focus:ring-inset focus:ring-green-600 ${
+                  isEditable ? "" : "border-white font-bold "
+                }`}
+                disabled={!isEditable}
+                onChange={handleChange}
               />
             </div>
           </div>
@@ -235,14 +280,17 @@ const Profile = () => {
             </label>
             <div className="mt-2">
               <input
-                value={profileData.region}
+                value={isEditable ? editingData.region : profileData.region}
                 type="text"
                 name="region"
                 id="region"
                 style={{ width: "450px" }}
                 autoComplete="given-name"
-                className="block lg:w-96 p-4 h-12 rounded-md py-1.5 font-bold"
-                disabled
+                className={`block lg:w-96 p-4 h-12 rounded-md py-1.5  border-2 focus:border-transparent focus:outline-none focus:ring-1 focus:ring-inset focus:ring-green-600 ${
+                  isEditable ? "" : "border-white font-bold "
+                }`}
+                disabled={!isEditable}
+                onChange={handleChange}
               />
             </div>
           </div>
@@ -257,14 +305,17 @@ const Profile = () => {
             </label>
             <div className="mt-2">
               <input
-                value={profileData.address}
+                value={isEditable ? editingData.address : profileData.address}
                 type="text"
-                name="Email"
-                id="Email"
+                name="address"
+                id="address"
                 style={{ width: "450px" }}
                 autoComplete="given-name"
-                className="block lg:w-96 p-4 h-12 rounded-md py-1.5 font-bold"
-                disabled
+                className={`block lg:w-96 p-4 h-12 rounded-md py-1.5  border-2 focus:border-transparent focus:outline-none focus:ring-1 focus:ring-inset focus:ring-green-600 ${
+                  isEditable ? "" : "border-white font-bold "
+                }`}
+                disabled={!isEditable}
+                onChange={handleChange}
               />
             </div>
           </div>
