@@ -1,4 +1,3 @@
-import React from "react";
 import Home from "../assets/images/home.jpg"
 import { useState } from "react";
 
