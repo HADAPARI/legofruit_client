@@ -7,7 +7,7 @@ import Signin from "./pages/Signin";
 import Signup from "./pages/Signup";
 import Profile from "./pages/Profile";
 // import { decrement, increment } from "./redux/reducers/counterSlice";
-import { createBrowserRouter, RouterProvider } from "react-router-dom"
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 const App = () => {
 
@@ -15,19 +15,20 @@ const App = () => {
   // const dispatch = useDispatch();
 
   const router = createBrowserRouter([
-    { 
-      path: "/", 
-      element: <Root/>,  
-      errorElement: <ErrorPage/>,
+    {
+      path: "/",
+      element: <Root />,
+      errorElement: <ErrorPage />,
       children: [
-        { 
-          path: "/", 
-          element: <Home/>,
+        {
+          path: "/",
+          element: <Home />,
         },
-        { 
-          path: "signup", 
-          element: <Signup/>,
+        {
+          path: "signup",
+          element: <Signup />,
         },
+<<<<<<< HEAD
         { 
           path: "signin", 
           element: <Signin/>,
@@ -43,9 +44,22 @@ const App = () => {
       ]
     }
   ])
+=======
+        {
+          path: "signin",
+          element: <Signin />,
+        },
+        {
+          path: "profile",
+          element: <Profile />,
+        },
+      ],
+    },
+  ]);
+>>>>>>> mahanitia
 
   return (
-    <RouterProvider router={router}/>
+    <RouterProvider router={router} />
     // <div>
     //   <div>
     //     <div>
