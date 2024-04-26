@@ -8,11 +8,32 @@ import {
   MagnifyingGlass,
   MapPin,
   ShoppingBagOpen,
+  SignOut,
+  User,
 } from "@phosphor-icons/react";
 import Logo from "./Logo";
 import Bull from "./Bull";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import axios from "axios";
+import { set } from "../redux/reducers/userSlice";
 
 const Header = () => {
+  const user = useSelector((state) => state.user);
+  const BASE_URL = import.meta.env.VITE_BASE_URL;
+  const dispatch = useDispatch();
+
+  const signOut = () => {
+    axios
+      .get(`${BASE_URL}/user/signout`, {withCredentials: true})
+      .then(() => {
+        dispatch(set(null));
+      })
+      .catch(() => {
+        console.log("Pas OK!");
+      });
+  };
+
   return (
     <div className="px-20 py-5 mb-3 shadow-lg sticky top-0 z-50 bg-white">
       <div className="flex justify-between items-center">
@@ -39,29 +60,52 @@ const Header = () => {
               <div className="text-orange-500 text-start mt-2">$0.00</div>
             </div>
           </button>
-          <div className="join">
-            <Link
-              to="/signin"
-              className="btn btn-outline w-32 border-orange-500 hover:bg-violet-800 hover:border-violet-800 hover:text-white join-item"
-            >
-              Se connecter
-            </Link>
-            <Link
-              to="/signup"
-              className="btn bg-orange-500 border border-orange-500 text-white hover:bg-orange-600 w-32 join-item"
-            >
-              S&apos;inscrire
-            </Link>
-          </div>
-          <div className="hidden items-center gap-3">
-            <div className="avatar">
-              <div className="w-10 rounded-full">
-                <img src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
-              </div>
+          {!user ? (
+            <div className="join">
+              <Link
+                to="/signin"
+                className="btn btn-outline w-32 border-orange-500 hover:bg-violet-800 hover:border-violet-800 hover:text-white join-item"
+              >
+                Se connecter
+              </Link>
+              <Link
+                to="/signup"
+                className="btn bg-orange-500 border border-orange-500 text-white hover:bg-orange-600 w-32 join-item"
+              >
+                S&apos;inscrire
+              </Link>
             </div>
-            <div className="text-gray-400">Anonyme</div>
-            <CaretDown size={12} />
-          </div>
+          ) : (
+            <div className="dropdown dropdown-hover">
+              <div tabIndex={0} role="button" className="btn btn-ghost">
+                <div className="flex items-center gap-3">
+                  <div className="avatar">
+                    <div className="w-10 rounded-full">
+                      <img src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+                    </div>
+                  </div>
+                  <div className="text-gray-400">{user.firstname}</div>
+                  <CaretDown size={12} />
+                </div>
+              </div>
+              <ul
+                tabIndex={0}
+                className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
+              >
+                <li>
+                  <Link to="/" className="py-3">
+                    <User size={20} /> Profil
+                  </Link>
+                </li>
+                <li>
+                  <div className="py-3" onClick={signOut}>
+                    <SignOut size={20} />
+                    Se déconnecter
+                  </div>
+                </li>
+              </ul>
+            </div>
+          )}
         </div>
       </div>
 

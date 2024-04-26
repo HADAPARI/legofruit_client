@@ -1,5 +1,5 @@
-// import { useDispatch } from "react-redux";
-// import { set } from "../redux/reducers/userSlice";
+import { useDispatch } from "react-redux";
+import { set } from "../redux/reducers/userSlice";
 
 import axios from "axios";
 import Validation from "../utilities/validation";
@@ -11,10 +11,11 @@ import {
   UserCircle,
 } from "@phosphor-icons/react";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Signin = () => {
   const BASE_URL = import.meta.env.VITE_BASE_URL;
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
   const [showPassword, setShowPassword] = useState(false);
 
@@ -30,15 +31,22 @@ const Signin = () => {
     setValues(newObject);
   }
 
+  const navigate = useNavigate();
+
   function handleValidation(event) {
     event.preventDefault();
     axios
-      .post(`${BASE_URL}/user/signin`, {
-        email: values.email,
-        password: values.password,
-      })
-      .then(() => {
-        console.log("ok");
+      .post(
+        `${BASE_URL}/user/signin`,
+        {
+          email: values.email,
+          password: values.password,
+        },
+        { withCredentials: true }
+      )
+      .then((res) => {
+        dispatch(set(res.data))
+        navigate("/");
       })
       .catch(() => {
         console.log("Pas OK!");
@@ -52,9 +60,9 @@ const Signin = () => {
       <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <div className="flex justify-center">
-            <UserCircle size={150} weight="thin"/>
+            <UserCircle size={150} weight="thin" />
           </div>
-          <h1 className="mt-2 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
+          <h1 className="mt-2 text-center text-xl font-semibold">
             Connectez vous à votre compte !
           </h1>
         </div>
@@ -77,7 +85,7 @@ const Signin = () => {
                   onChange={handleInput}
                 />
               </div>
-              {<span className="text-error">{errors.email}</span>}
+              {<span className="text-error">{errors?.email}</span>}
             </div>
 
             <div>
@@ -113,7 +121,7 @@ const Signin = () => {
                   </div>
                 </div>
               </div>
-              {<span className="text-error">{errors.password}</span>}
+              {<span className="text-error">{errors?.password}</span>}
             </div>
 
             <div>
@@ -125,7 +133,7 @@ const Signin = () => {
                   text-white 
                   hover:bg-violet-500 w-full"
               >
-                S&apos;authentifier
+                Se connecter
               </button>
             </div>
           </form>
