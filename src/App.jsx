@@ -6,7 +6,7 @@ import Signin from "./pages/Signin";
 import Signup from "./pages/Signup";
 // import { decrement, increment } from "./redux/reducers/counterSlice";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Profile from "./pages/profile";
+import Profile from "./pages/Profiles";
 import { useEffect } from "react";
 import axios from "axios";
 import { useDispatch } from "react-redux";
