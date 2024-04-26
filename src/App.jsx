@@ -10,6 +10,8 @@ import { useEffect } from "react";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { set } from "./redux/reducers/userSlice";
+import ProtectedRoute from "./components/ProtectedRoute";
+import HomeConnected from "./components/HomeConnected";
 
 const App = () => {
   const BASE_URL = import.meta.env.VITE_BASE_URL;
@@ -35,7 +37,7 @@ const App = () => {
       children: [
         {
           path: "/",
-          element: <Home />,
+          element: <ProtectedRoute defaultPage={<HomeConnected/>}><Home /></ProtectedRoute>,
         },
         {
           path: "signup",

@@ -81,7 +81,8 @@ const Home = () => {
           <div className="mt-12 flex justify-between">
             <Product
               image={file4}
-              type="Fruits"
+              category="Fruits"
+              type="supply"
               title="Fruits frais de la ferme"
               quantity={250}
               price={7.99}
@@ -89,7 +90,8 @@ const Home = () => {
             />
             <Product
               image={file5}
-              type="Fruits"
+              category="Fruits"
+              type="supply"
               title="Orange bien fraiche"
               quantity={500}
               price={10}
@@ -97,7 +99,8 @@ const Home = () => {
             />
             <Product
               image={file4}
-              type="Fruits"
+              category="Fruits"
+              type="supply"
               title="Tomate frais de la ferme"
               quantity={330}
               price={6.5}
@@ -105,7 +108,8 @@ const Home = () => {
             />
             <Product
               image={file5}
-              type="Fruits"
+              category="Fruits"
+              type="supply"
               title="Fruits frais de la ferme"
               quantity={480}
               price={10.63}
@@ -158,7 +162,8 @@ const Home = () => {
             <div className="flex justify-between mt-10">
               <Product
                 image={file4}
-                type="Fruits"
+                category="Fruits"
+                type="supply"
                 title="Fruits frais de la ferme"
                 quantity={250}
                 price={7.99}
@@ -166,7 +171,8 @@ const Home = () => {
               />
               <Product
                 image={file5}
-                type="Fruits"
+                category="Fruits"
+                type="supply"
                 title="Orange bien fraiche"
                 quantity={500}
                 price={10}
@@ -174,7 +180,8 @@ const Home = () => {
               />
               <Product
                 image={file4}
-                type="Fruits"
+                category="Fruits"
+                type="supply"
                 title="Tomate frais de la ferme"
                 quantity={330}
                 price={6.5}
@@ -182,7 +189,8 @@ const Home = () => {
               />
               <Product
                 image={file5}
-                type="Fruits"
+                category="Fruits"
+                type="supply"
                 title="Fruits frais de la ferme"
                 quantity={480}
                 price={10.63}
@@ -192,7 +200,8 @@ const Home = () => {
             <div className="flex justify-between mt-10">
               <Product
                 image={file4}
-                type="Fruits"
+                category="Fruits"
+                type="supply"
                 title="Fruits frais de la ferme"
                 quantity={250}
                 price={7.99}
@@ -200,7 +209,8 @@ const Home = () => {
               />
               <Product
                 image={file5}
-                type="Fruits"
+                category="Fruits"
+                type="supply"
                 title="Orange bien fraiche"
                 quantity={500}
                 price={10}
@@ -208,7 +218,8 @@ const Home = () => {
               />
               <Product
                 image={file4}
-                type="Fruits"
+                category="Fruits"
+                type="supply"
                 title="Tomate frais de la ferme"
                 quantity={330}
                 price={6.5}
@@ -216,7 +227,8 @@ const Home = () => {
               />
               <Product
                 image={file5}
-                type="Fruits"
+                category="Fruits"
+                type="supply"
                 title="Fruits frais de la ferme"
                 quantity={480}
                 price={10.63}

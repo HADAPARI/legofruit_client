@@ -4,8 +4,8 @@ export const userSlice = createSlice({
   name: "user",
   initialState: null,
   reducers: {
-    set: (state,action) => {
-      return action.payload;
+    set: (state, action) => {
+      return action.payload === "" ? null : action.payload;
     },
   },
 });

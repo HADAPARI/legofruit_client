@@ -35,7 +35,7 @@ const Header = () => {
   };
 
   return (
-    <div className="px-20 py-5 mb-3 shadow-lg sticky top-0 z-50 bg-white">
+    <div className="px-20 py-5 shadow-lg sticky top-0 z-50 bg-white">
       <div className="flex justify-between items-center">
         <Logo />
         <div className="flex items-center gap-2">
@@ -53,13 +53,13 @@ const Header = () => {
         </div>
 
         <div className="flex gap-3">
-          <button className="btn btn-ghost hover:bg-gray-100 flex items-center gap-3">
+          {user?.role !== "FARMER" && <button className="btn btn-ghost hover:bg-gray-100 flex items-center gap-3">
             <ShoppingBagOpen size={32} />
             <div>
               <div>Mon Panier</div>
               <div className="text-orange-500 text-start mt-2">$0.00</div>
             </div>
-          </button>
+          </button>}
           {!user ? (
             <div className="join">
               <Link
@@ -109,7 +109,7 @@ const Header = () => {
         </div>
       </div>
 
-      <div className="mt-3 flex justify-between">
+      {!user && <div className="mt-3 flex justify-between">
         <div className="dropdown dropdown-hover">
           <div tabIndex={0} role="button" className="btn btn-ghost">
             <CirclesFour size={30} className="text-green-600" />
@@ -159,7 +159,7 @@ const Header = () => {
             (+261) 34 63 465 65
           </div>
         </div>
-      </div>
+      </div>}
     </div>
   );
 };
