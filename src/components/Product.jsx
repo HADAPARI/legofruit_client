@@ -1,8 +1,22 @@
-import { Minus, Plus, ShoppingBagOpen } from "@phosphor-icons/react";
+import {
+  HandArrowUp,
+  Minus,
+  Plus,
+  ShoppingBagOpen,
+} from "@phosphor-icons/react";
 import { useState } from "react";
+import { useSelector } from "react-redux";
 
 // eslint-disable-next-line react/prop-types
-const Product = ({ image, type, title, quantity, price, promotion }) => {
+const Product = ({
+  image,
+  category,
+  type,
+  title,
+  quantity,
+  price,
+  promotion,
+}) => {
   const [purchaseQuantity, setPurchaseQuantity] = useState(1);
 
   const increment = () => {
@@ -17,49 +31,68 @@ const Product = ({ image, type, title, quantity, price, promotion }) => {
     }
   };
 
+  const user = useSelector((state) => state.user);
+
   return (
     <div className="w-80 rounded-xl shadow-xl py-10 bg-white">
-      {promotion != "" && (
-        <div className="bg-orange-500 w-fit text-white px-3 text-sm promotion">
-          -{promotion}%
-        </div>
-      )}
-      <div className="flex justify-center">
+      <div className="relative text-white text-sm">
+        {promotion != "" && type == "supply" && (
+          <div className="bg-orange-500 w-fit px-3 promotion">
+            -{promotion}%
+          </div>
+        )}
+        {user && (
+          <div
+            className={`absolute top-0 right-0 px-3 rounded-s-badge w-44 ${
+              type === "supply" ? "bg-green-600" : "bg-orange-500"
+            }`}
+          >
+            {type === "supply" ? (
+              <span className="uppercase">
+                Offre {user.role === "FARMER" && "concurrente"}{" "}
+              </span>
+            ) : (
+              <span className="uppercase">
+                Demande {user.role === "SUPERMARKET" && "concurrente"}
+              </span>
+            )}
+          </div>
+        )}
+      </div>
+      <div className="flex justify-center mt-10">
         <img src={image} alt={title} className="w-52" />
       </div>
-      <div className="px-10 mt-3">
-        <h3 className="text-gray-400 uppercase">{type}</h3>
-        <h2 className="font-semibold text-xl">
-          {title + " " + quantity + "kg"}
-        </h2>
-        <p className="my-5">
+      <div className="px-5 mt-3">
+        <h4 className="text-gray-400 uppercase">{category}</h4>
+        <h2 className="font-semibold text-xl">{title}</h2>
+        <h3>
+          Quantités:{" "}
           <span className="text-orange-500 text-xl font-semibold">
+            {quantity}
+          </span>
+          kg
+        </h3>
+        <p className="my-5">
+          <span className="text-orange-500 text-2xl font-bold">
             {"$" + price}
           </span>
-          <span className="text-xs">/kg</span>
+          <span>/kg</span>
         </p>
-        <div className="flex justify-between">
-          <div className="join">
-            <button
-              className="btn btn-outline border-gray-100 join-item"
-              onClick={decrement}
-            >
-              <Minus size={20} />
-            </button>
-            <span className="join-item px-5 flex items-center bg-gray-100">
-              {purchaseQuantity}
-            </span>
-            <button
-              className="btn btn-outline border-gray-100 join-item"
-              onClick={increment}
-            >
-              <Plus size={20} />
+        {((user?.role === "FARMER" && type != "supply") ||
+          (user?.role === "SUPERMARKET" && type != "demand")) && (
+          <div className="flex justify-end">
+            <button className="btn bg-green-600 hover:bg-green-700 text-white p-3 rounded-badge">
+              {!user || user?.role === "SUPERMARKET" ? (
+                <ShoppingBagOpen size={20} />
+              ) : (
+                <>
+                  <HandArrowUp size={20} />
+                  PROPOSER
+                </>
+              )}
             </button>
           </div>
-          <button className="btn bg-green-600 hover:bg-green-700 text-white p-3 rounded-full">
-            <ShoppingBagOpen size={20} />
-          </button>
-        </div>
+        )}
       </div>
     </div>
   );

@@ -1,10 +1,10 @@
+import { useSelector } from "react-redux";
 
 // eslint-disable-next-line react/prop-types
-const ProtectedRoute = ({children}) => {
-    
-  return (
-    <div>{{children}}</div>
-  )
-}
+const ProtectedRoute = ({ children, defaultPage }) => {
+  const user = useSelector((state) => state.user);
 
-export default ProtectedRoute
+  return <>{user ? <div>{ defaultPage }</div> : <div>{children}</div>}</>;
+};
+
+export default ProtectedRoute;
