@@ -4,6 +4,7 @@ import ErrorPage from "./pages/ErrorPage";
 import Home from "./pages/Home";
 import Signin from "./pages/Signin";
 import Signup from "./pages/Signup";
+// import { decrement, increment } from "./redux/reducers/counterSlice";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Profile from "./pages/profile";
 import { useEffect } from "react";

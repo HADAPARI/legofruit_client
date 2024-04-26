@@ -270,6 +270,7 @@ export default function Signup() {
           password: "",
           verifiedpassword: "",
         });
+
         document.getElementById("signup_modal").showModal();
       })
       .catch(() => {
@@ -495,11 +496,11 @@ export default function Signup() {
             Inscription réussi
           </h3>
           <p className="py-4 leading-relaxed">
-            Un e-mail de confirmation a été envoyé à votre
-            adresse. Veuillez vérifier votre boîte de réception et suivre les
-            instructions pour activer votre compte. Si vous ne trouvez pas
-            l&apos;e-mail dans votre boîte de réception, veuillez vérifier votre
-            courrier indésirable. Merci !
+            Un e-mail de confirmation a été envoyé à votre adresse. Veuillez
+            vérifier votre boîte de réception et suivre les instructions pour
+            activer votre compte. Si vous ne trouvez pas l&apos;e-mail dans
+            votre boîte de réception, veuillez vérifier votre courrier
+            indésirable. Merci !
           </p>
           <div className="modal-action">
             <form method="dialog">
