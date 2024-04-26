@@ -1,36 +1,9 @@
-import {
-  HandArrowUp,
-  Minus,
-  Plus,
-  ShoppingBagOpen,
-} from "@phosphor-icons/react";
-import { useState } from "react";
+import { HandArrowUp, ShoppingBagOpen } from "@phosphor-icons/react";
 import { useSelector } from "react-redux";
 
 // eslint-disable-next-line react/prop-types
-const Product = ({
-  image,
-  category,
-  type,
-  title,
-  quantity,
-  price,
-  promotion,
+const Product = ({image,category,type,title,quantity,price,promotion,
 }) => {
-  const [purchaseQuantity, setPurchaseQuantity] = useState(1);
-
-  const increment = () => {
-    if (purchaseQuantity < quantity) {
-      setPurchaseQuantity((purchaseQuantity) => purchaseQuantity + 1);
-    }
-  };
-
-  const decrement = () => {
-    if (purchaseQuantity > 1) {
-      setPurchaseQuantity((purchaseQuantity) => purchaseQuantity - 1);
-    }
-  };
-
   const user = useSelector((state) => state.user);
 
   return (
