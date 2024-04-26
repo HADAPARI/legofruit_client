@@ -285,7 +285,12 @@ export default function Signup() {
     <>
       <div className="h-full mb-7">
         <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
-          <div className="sm:mx-auto sm:w-full sm:max-w-lg">
+        <div className="">
+            <h2 className="mb-6 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
+              S&apos;inscrire en tant que
+            </h2>
+          </div>
+          <div className="flex justify-center">
             <div className="join">
               <Link onClick={handleClickProducer} className={user.bntProducer}>
                 Agriculteur
@@ -295,13 +300,6 @@ export default function Signup() {
               </Link>
             </div>
           </div>
-
-          <div className="sm:mx-auto sm:w-full sm:max-w-md">
-            <h2 className="mt-6 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
-              Créer un nouveau compte
-            </h2>
-          </div>
-
           <div className="mt-6 sm:mx-auto sm:w-full sm:max-w-lg">
             <form className="space-y-5" onSubmit={handleOnSubmit}>
               {firstLineInput}
