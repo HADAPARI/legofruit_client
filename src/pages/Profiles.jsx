@@ -1,10 +1,23 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import Logo from "../assets/img/user.png";
 import DeleteAccount from "../components/DeleteAccount";
-import { Star } from "@phosphor-icons/react";
+import { Star, UserCircle } from "@phosphor-icons/react";
+//modal
+import ModalPub from "../components/ModalPub";
 
 const Profile = () => {
+  //modal
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleModalOpen = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleModalClose = () => {
+    setIsModalOpen(false);
+  };
+
+  const BASE_URL = import.meta.env.VITE_BASE_URL;
   const [profileData, setProfileData] = useState({
     firstname: "",
     lastname: "",
@@ -14,6 +27,7 @@ const Profile = () => {
     region: "",
     role: "",
     address: "",
+    avatar: "",
   });
 
   const [editingData, setEditingData] = useState({
@@ -25,13 +39,14 @@ const Profile = () => {
     region: "",
     role: "",
     address: "",
+    avatar: "",
   });
 
   useEffect(() => {
     const fetchProfileData = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:9000/user/profile/828b841b-a708-4675-9ae5-16f5359226ff"
+          "http://localhost:9000/user/profile/7a7d10a7-d1fe-4424-bde5-da925a00bcf9"
         );
         console.log(response);
         if (response.status === 200) {
@@ -65,25 +80,69 @@ const Profile = () => {
     }));
   };
 
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        this.setState({
+          imageUrl: reader.result,
+        });
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+  const [countries, setCountries] = useState([]);
+  const [regions, setRegions] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get(`${BASE_URL}/country`)
+      .then((res) => {
+        setCountries(res.data);
+      })
+      .catch(() => {});
+  }, []);
+
+  useEffect(() => {
+    if (editingData.country != "") {
+      axios
+        .get(`${BASE_URL}/region/${editingData.country}`)
+        .then((res) => {
+          setRegions(res.data);
+        })
+        .catch(() => {});
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [editingData.country]);
+
+  const handleOnChange = (e) => {
+    const { name, value } = e.target;
+    setEditingData({ ...editingData, [name]: value });
+  };
+
   return (
     <div className="px-4 lg:px-60">
       <b>
-        <h1 className="text-4xl pt-5 pb-5 ">My profile</h1>
+        <h1 className="text-4xl pt-5 pb-5 ">Mon profile</h1>
       </b>
 
       <div className="flex flex-col lg:flex-row justify-between items-center space-y-4 lg:space-y-0 lg:space-x-4 pb-10">
         <div className="flex items-baseline space-x-2 mt-4">
           <div className="relative inline-block">
-            <img
+            <UserCircle
               className="inline-block h-36 w-36 rounded-full ring-2 ring-white"
-              src={Logo}
-              alt=""
+              size={150}
+              weight="thin"
             />
             <label htmlFor="fileInput">
-              <button className="absolute bottom-2 right-2  align-middle py-1 px-1 text-white font-bold rounded bg-gray-400 ">
+              <button
+                onClick={handleImageChange}
+                className="absolute bottom-2 right-2 me-2 mb-2 py-1 px-1 text-white font-bold rounded bg-gray-400 "
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="h-6 w-6  "
+                  className="h-6 w-6"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -136,8 +195,12 @@ const Profile = () => {
             onClick={toggleEdit}
             className="btn btn-outline w-36 border-orange-500 bg-orange-500 hover:bg-orange-600 hover:border-orange-600 text-white join-item"
           >
-            {isEditable ? "Save" : "Edit"}
+            {isEditable ? "Sauvegarder" : "Modifier"}
           </button>
+          <button onClick={handleModalOpen}>Ouvrir la modal</button>
+          {isModalOpen && (
+            <ModalPub isOpen={isModalOpen} onClose={handleModalClose} />
+          )}
         </div>
       </div>
 
@@ -158,8 +221,8 @@ const Profile = () => {
               id="first-name"
               style={{ width: "450px" }}
               autoComplete="given-name"
-              className={`block lg:w-96 p-4 h-12 rounded-md py-1.5  border-2 focus:border-transparent focus:outline-none focus:ring-1 focus:ring-inset focus:ring-green-600 ${
-                isEditable ? "" : "border-white font-bold "
+              className={`block lg:w-96 h-12 p-4 rounded-md py-1.5  border-2 focus:border-transparent focus:outline-none focus:ring-1 focus:ring-inset focus:ring-green-600 ${
+                isEditable ? "" : "border-white font-bold p-0"
               }`}
               disabled={!isEditable}
               onChange={handleChange}
@@ -182,7 +245,7 @@ const Profile = () => {
                 style={{ width: "450px" }}
                 autoComplete="given-name"
                 className={`block lg:w-96 p-4 h-12 rounded-md py-1.5  border-2 focus:border-transparent focus:outline-none focus:ring-1 focus:ring-inset focus:ring-green-600 ${
-                  isEditable ? "" : "border-white font-bold "
+                  isEditable ? "" : "border-white font-bold p-0 "
                 }`}
                 disabled={!isEditable}
                 onChange={handleChange}
@@ -209,7 +272,7 @@ const Profile = () => {
                 style={{ width: "450px" }}
                 autoComplete="given-name"
                 className={`block lg:w-96 p-4 h-12 rounded-md py-1.5  border-2 focus:border-transparent focus:outline-none focus:ring-1 focus:ring-inset focus:ring-green-600 ${
-                  isEditable ? "" : "border-white font-bold "
+                  isEditable ? "" : "border-white font-bold p-0"
                 }`}
                 disabled={!isEditable}
                 onChange={handleChange}
@@ -233,7 +296,7 @@ const Profile = () => {
                 style={{ width: "450px" }}
                 autoComplete="given-name"
                 className={`block lg:w-96 p-4 h-12 rounded-md py-1.5  border-2 focus:border-transparent focus:outline-none focus:ring-1 focus:ring-inset focus:ring-green-600 ${
-                  isEditable ? "" : "border-white font-bold "
+                  isEditable ? "" : "border-white font-bold p-0"
                 }`}
                 disabled={!isEditable}
                 onChange={handleChange}
@@ -249,49 +312,65 @@ const Profile = () => {
         <div className="flex flex-col lg:flex-row justify-between space-y-4 lg:space-y-0 lg:space-x-2">
           <div className="overflow-hidden">
             <label
-              htmlFor="email"
+              htmlFor="country"
               className="block text-sm font-medium leading-6 text-gray-600"
             >
               Pays
             </label>
             <div className="mt-2">
-              <input
+              <select
                 value={isEditable ? editingData.country : profileData.country}
-                type="text"
+                onChange={handleOnChange}
                 name="country"
                 id="country"
                 style={{ width: "450px" }}
-                autoComplete="given-name"
-                className={`block lg:w-96 p-4 h-12 rounded-md py-1.5  border-2 focus:border-transparent focus:outline-none focus:ring-1 focus:ring-inset focus:ring-green-600 ${
-                  isEditable ? "" : "border-white font-bold "
+                className={`block lg:w-96 p-4 h-12 rounded-md py-1.5 border-2 focus:border-transparent focus:outline-none focus:ring-1 focus:ring-inset focus:ring-green-600 ${
+                  isEditable ? "" : "border-white font-bold text-black p-0"
                 }`}
                 disabled={!isEditable}
-                onChange={handleChange}
-              />
+              >
+                <option value="">
+                  {isEditable ? editingData.country : profileData.country}
+                </option>
+                {Array.isArray(countries) &&
+                  countries.map((country) => (
+                    <option key={country.id} value={country.id}>
+                      {country.name}
+                    </option>
+                  ))}
+              </select>
             </div>
           </div>
 
           <div className="overflow-hidden ms-0">
             <label
-              htmlFor="phone"
+              htmlFor="region"
               className="block text-sm font-medium leading-6 text-gray-600"
             >
               Région
             </label>
             <div className="mt-2">
-              <input
+              <select
                 value={isEditable ? editingData.region : profileData.region}
-                type="text"
+                onChange={handleOnChange}
                 name="region"
                 id="region"
                 style={{ width: "450px" }}
-                autoComplete="given-name"
-                className={`block lg:w-96 p-4 h-12 rounded-md py-1.5  border-2 focus:border-transparent focus:outline-none focus:ring-1 focus:ring-inset focus:ring-green-600 ${
-                  isEditable ? "" : "border-white font-bold "
+                className={`block lg:w-96 p-4 h-12 rounded-md py-1.5 border-2 focus:border-transparent focus:outline-none focus:ring-1 focus:ring-inset focus:ring-green-600 ${
+                  isEditable ? "" : "border-white font-bold text-black p-0"
                 }`}
                 disabled={!isEditable}
-                onChange={handleChange}
-              />
+              >
+                <option value="">
+                  {isEditable ? editingData.region : profileData.region}
+                </option>
+                {Array.isArray(regions) &&
+                  regions.map((region) => (
+                    <option key={region.id} value={region.id}>
+                      {region.name}
+                    </option>
+                  ))}
+              </select>
             </div>
           </div>
         </div>{" "}
@@ -312,7 +391,7 @@ const Profile = () => {
                 style={{ width: "450px" }}
                 autoComplete="given-name"
                 className={`block lg:w-96 p-4 h-12 rounded-md py-1.5  border-2 focus:border-transparent focus:outline-none focus:ring-1 focus:ring-inset focus:ring-green-600 ${
-                  isEditable ? "" : "border-white font-bold "
+                  isEditable ? "" : "border-white font-bold p-0"
                 }`}
                 disabled={!isEditable}
                 onChange={handleChange}
