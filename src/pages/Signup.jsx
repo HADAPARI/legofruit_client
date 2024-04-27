@@ -8,10 +8,9 @@ import {
   User,
 } from "@phosphor-icons/react";
 import axios from "axios";
-import { useState } from "react";
-import validateField from "../utilities/validation";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { useEffect } from "react";
+import validateField from "../utilities/validation";
 
 export default function Signup() {
   const BASE_URL = import.meta.env.VITE_BASE_URL;
@@ -182,8 +181,7 @@ export default function Signup() {
     e.preventDefault();
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    const passwordRegex =
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{6,}$/;
     const phoneRegex = /^(0|261)?3[0-9]{2}[0-9]{6}$/;
 
     setErrors((error) => ({
@@ -224,7 +222,7 @@ export default function Signup() {
       password: validateField(
         user.password,
         passwordRegex,
-        "Mot de passe fort requis.(6 caractères minimum, 20 maximum, avec au moins: une lettre en majuscule, une lettre en minuscule, un nombre et un caractère spécial)"
+        "Mot de passe fort requis.(6 caractères minimum, 20 maximum, avec au moins: une lettre en majuscule, une lettre en minuscule, un nombre et sans caractère spécial)"
       ),
     }));
 

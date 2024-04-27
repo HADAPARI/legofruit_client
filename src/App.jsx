@@ -5,14 +5,18 @@ import Home from "./pages/Home";
 import Signin from "./pages/Signin";
 import Signup from "./pages/Signup";
 // import { decrement, increment } from "./redux/reducers/counterSlice";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Profile from "./pages/Profiles";
-import { useEffect } from "react";
 import axios from "axios";
+import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { set } from "./redux/reducers/userSlice";
-import ProtectedRoute from "./components/ProtectedRoute";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import HomeConnected from "./components/HomeConnected";
+import ProtectedRoute from "./components/ProtectedRoute";
+import Profile from "./pages/Profiles";
+import { set } from "./redux/reducers/userSlice";
+
+import FirstPageResetPassword from "./pages/FirstPageResetPassword";
+import SecondPageResetPassword from "./pages/SecondPageResetPassword";
+import ThirdPageResetPassword from "./pages/ThirdPageResetPassword";
 
 const App = () => {
   const BASE_URL = import.meta.env.VITE_BASE_URL;
@@ -38,7 +42,11 @@ const App = () => {
       children: [
         {
           path: "/",
-          element: <ProtectedRoute defaultPage={<HomeConnected/>}><Home /></ProtectedRoute>,
+          element: (
+            <ProtectedRoute defaultPage={<HomeConnected />}>
+              <Home />
+            </ProtectedRoute>
+          ),
         },
         {
           path: "signup",
@@ -55,6 +63,15 @@ const App = () => {
         {
           path: "profile",
           element: <Profile />,
+        },
+        {
+          path: "emailverified",
+          element: <SecondPageResetPassword />,
+        },
+        { path: "newpassword", element: <ThirdPageResetPassword /> },
+        {
+          path: "resetpassword",
+          element: <FirstPageResetPassword />,
         },
       ],
     },

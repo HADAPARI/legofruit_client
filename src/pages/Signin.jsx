@@ -1,8 +1,6 @@
 import { useDispatch } from "react-redux";
 import { set } from "../redux/reducers/userSlice";
 
-import axios from "axios";
-import Validation from "../utilities/validation";
 import {
   EnvelopeSimple,
   Eye,
@@ -10,8 +8,13 @@ import {
   Lock,
   UserCircle,
 } from "@phosphor-icons/react";
+import axios from "axios";
 import { useState } from "react";
+
 import { useNavigate } from "react-router-dom";
+
+import { Link } from "react-router-dom";
+import Validation from "../utilities/validation";
 
 const Signin = () => {
   const BASE_URL = import.meta.env.VITE_BASE_URL;
@@ -45,7 +48,7 @@ const Signin = () => {
         { withCredentials: true }
       )
       .then((res) => {
-        dispatch(set(res.data))
+        dispatch(set(res.data));
         navigate("/");
       })
       .catch(() => {
@@ -102,6 +105,7 @@ const Signin = () => {
                   value={values.password}
                   onChange={handleInput}
                 />
+
                 <div className="absolute inset-y-0 right-4 flex items-center">
                   <div>
                     <EyeSlash
@@ -123,6 +127,9 @@ const Signin = () => {
               </div>
               {<span className="text-error">{errors?.password}</span>}
             </div>
+            <Link to="/resetpassword" className=" text-blue-600">
+              Mot de passe oublié ?
+            </Link>
 
             <div>
               <button
