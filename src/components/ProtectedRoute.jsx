@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 const ProtectedRoute = ({ children, defaultPage }) => {
   const user = useSelector((state) => state.user);
 
-  return <>{user ? <div>{ defaultPage }</div> : <div>{children}</div>}</>;
+  return <>{user ? <div>{ children }</div> : <div>{defaultPage}</div>}</>;
 };
 
 export default ProtectedRoute;

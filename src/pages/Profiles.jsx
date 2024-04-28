@@ -2,11 +2,9 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import DeleteAccount from "../components/DeleteAccount";
 import { Star, UserCircle } from "@phosphor-icons/react";
-//modal
 import ModalPub from "../components/ModalPub";
 
 const Profile = () => {
-  //modal
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleModalOpen = () => {
