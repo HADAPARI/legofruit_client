@@ -46,7 +46,7 @@ const Profile = () => {
     const fetchProfileData = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:9000/user/profile/7a7d10a7-d1fe-4424-bde5-da925a00bcf9"
+          "http://localhost:9000/user/profile/e49e792f-3674-43aa-9082-3406900e5a8f"
         );
         console.log(response);
         if (response.status === 200) {
