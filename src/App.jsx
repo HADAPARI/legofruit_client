@@ -41,7 +41,11 @@ const App = () => {
       children: [
         {
           path: "/",
-          element: <ProtectedRoute defaultPage={<Home/>}><HomeConnected/></ProtectedRoute>,
+          element: (
+            <ProtectedRoute defaultPage={<Home />}>
+              <HomeConnected />
+            </ProtectedRoute>
+          ),
         },
         {
           path: "signup",
@@ -57,7 +61,11 @@ const App = () => {
         },
         {
           path: "profile",
-          element: <ProtectedRoute defaultPage={<Signin/>}><Profile /></ProtectedRoute>,
+          element: (
+            <ProtectedRoute defaultPage={<Signin />}>
+              <Profile />
+            </ProtectedRoute>
+          ),
         },
         {
           path: "emailverified",

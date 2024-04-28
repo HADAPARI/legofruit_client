@@ -2,9 +2,10 @@ import { useState } from "react";
 import { useEffect } from "react";
 import "../assets/css/StyleModal.css";
 import axios from "axios";
+import FirebaseImg from "../firebaseimage/FirebaseImg";
 
-const formatDate = (date) => {
-  const d = new Date(date);
+const formatDate = (daterecolte) => {
+  const d = new Date(daterecolte);
   let month = `${d.getMonth() + 1}`;
   let day = `${d.getDate()}`;
 
@@ -33,9 +34,29 @@ const legumes = {
   4: "Laitue",
   5: "Épinard",
 };
+
 const ModalProduit = ({ isOpen, onClose }) => {
-  const [isSending, setIsSending] = useState(false);
-  const BASE_URL = import.meta.env.VITE_BASE_URL;
+  const [formulaire, setFormulaire] = useState({
+    category: "",
+    name: "",
+    prix: "",
+    quantity: "",
+    datepublication: formatDate(new Date()),
+    daterecolte: null,
+    image: null,
+    userid_id: "",
+  });
+  const [errors, setErrors] = useState({
+    category: "",
+    name: "",
+    prix: "",
+    quantity: "",
+    datepublication: formatDate(new Date()),
+    daterecolte: null,
+    image: null,
+    userid_id: "",
+  });
+
   useEffect(() => {
     if (isOpen) {
       document.body.classList.add("modal-open");
@@ -44,35 +65,17 @@ const ModalProduit = ({ isOpen, onClose }) => {
     }
   }, [isOpen]);
 
-  const [formulaire, setFormulaire] = useState({
-    categorie: "",
-    nom: "",
-    prix: "",
-    quantite: "",
-    publication: formatDate(new Date()),
-    date: null,
-    image: null,
-  });
-  const [errors, setErrors] = useState({
-    categorie: "",
-    nom: "",
-    prix: "",
-    quantite: "",
-    date: null,
-    image: null,
-  });
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     let newErrors = {};
 
-    if (formulaire.categorie === "") {
-      newErrors.categorie = "Veuillez choisir une catégorie.";
+    if (formulaire.category === "") {
+      newErrors.category = "Veuillez choisir une catégorie.";
     }
 
-    if (formulaire.nom === "") {
-      newErrors.nom = "Veuillez choisir un produit.";
+    if (formulaire.name === "") {
+      newErrors.name = "Veuillez choisir un produit.";
     }
 
     if (formulaire.prix === "") {
@@ -81,70 +84,71 @@ const ModalProduit = ({ isOpen, onClose }) => {
       newErrors.prix = "Veuillez entrer un prix valide.";
     }
 
-    if (formulaire.quantite === "") {
-      newErrors.quantite = "Veuillez entrer une quantité.";
+    if (formulaire.quantity === "") {
+      newErrors.quantity = "Veuillez entrer une quantité.";
     } else if (
-      isNaN(parseFloat(formulaire.quantite)) ||
-      formulaire.quantite <= 0
+      isNaN(parseFloat(formulaire.quantity)) ||
+      formulaire.quantity <= 0
     ) {
-      newErrors.quantite = "Veuillez entrer une quantité valide.";
+      newErrors.quantity = "Veuillez entrer une quantité valide.";
     }
 
     if (!formulaire.image) {
       newErrors.image = "Veuillez choisir une image.";
     }
 
-    if (!formulaire.date) {
-      newErrors.date = "Veuillez entrer une date valide.";
+    if (!formulaire.daterecolte) {
+      newErrors.daterecolte = "Veuillez entrer une date valide.";
     }
     setErrors(newErrors);
-
     if (Object.keys(newErrors).length === 0) {
-      setIsSending(true);
-      console.log(formulaire);
-      axios
-        .post(`${BASE_URL}/user/publication`, {
-          categorie: formulaire.categorie,
-          nom: formulaire.nom,
-          prix: formulaire.prix,
-          quantite: formulaire.quantite,
-          publication: formatDate(new Date()),
-          date: formulaire.date,
-          image: formulaire.image,
-        })
-        .then(() => {
-          console.log("ok");
-          setIsSending(false);
-          setFormulaire({
-            categorie: "",
-            nom: "",
-            prix: "",
-            quantite: "",
-            publication: formatDate(new Date()),
-            date: null,
-            image: null,
-          });
-          onClose();
-        })
-        .catch(() => {
-          setIsSending(false);
+      try {
+        console.log(formulaire);
+        const response = await axios.post(
+          "http://localhost:9000/produit/ajout/e49e792f-3674-43aa-9082-3406900e5a8f",
+          {
+            category: formulaire.category,
+            name: formulaire.name,
+            prix: formulaire.prix,
+            quantity: formulaire.quantity,
+            datepublication: formatDate(new Date()),
+            daterecolte: formulaire.daterecolte,
+            image: formulaire.image,
+            userid_id: "e49e792f-3674-43aa-9082-3406900e5a8f",
+          }
+        );
+        console.log(response);
+        setFormulaire({
+          category: "",
+          name: "",
+          prix: "",
+          quantity: "",
+          daterecolte: null,
+          image: null,
+          userid_id: "",
         });
+        onClose();
+      } catch (error) {
+        console.error(error);
+      }
+    } else {
+      setErrors(newErrors);
     }
   };
 
   const handleChange = (e) => {
-    const { name, files, value } = e.target;
-    const updatedFormulaire = { ...formulaire };
+    const { name, value } = e.target;
+    setFormulaire((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
 
-    if (name === "image" && files && files.length > 0) {
-      updatedFormulaire.image = files[0];
-    } else if (name === "date") {
-      updatedFormulaire[name] = formatDate(value);
-    } else {
-      updatedFormulaire[name] = value;
-    }
-
-    setFormulaire(updatedFormulaire);
+  const handleImageSelect = (imageUrl) => {
+    setFormulaire((prevFormulaire) => ({
+      ...prevFormulaire,
+      image: imageUrl,
+    }));
   };
 
   return (
@@ -193,55 +197,55 @@ const ModalProduit = ({ isOpen, onClose }) => {
                 <div className="grid gap-4 mb-4 grid-cols-2">
                   <div className="col-span-2 sm:col-span-1">
                     <label
-                      htmlFor="categorie"
+                      htmlFor="category"
                       className="block mb-2 text-sm font-medium text-gray-900"
                     >
                       Catégorie
                     </label>
                     <select
-                      id="categorie"
-                      name="categorie"
+                      id="category"
+                      name="category"
                       className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5"
-                      value={formulaire.categorie}
+                      value={formulaire.category}
                       onChange={handleChange}
                     >
                       <option value="">Sélectionner une catégorie</option>
                       <option value="1">Fruits</option>
                       <option value="2">Légumes</option>
                     </select>
-                    {<span className="text-error">{errors.categorie}</span>}
+                    {<span className="text-error">{errors.category}</span>}
                   </div>
 
                   <div className="col-span-1">
                     <label
-                      htmlFor="nom"
+                      htmlFor="name"
                       className="block mb-2 text-sm font-medium text-gray-900"
                     >
                       Nom produit
                     </label>
                     <select
-                      id="nom"
-                      name="nom"
+                      id="name"
+                      name="name"
                       onChange={handleChange}
                       className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5"
-                      disabled={formulaire.categorie === ""}
-                      value={formulaire.nom}
+                      disabled={formulaire.category === ""}
+                      value={formulaire.name}
                     >
                       <option value="">Sélectionner un produit</option>
-                      {(formulaire.categorie === "1" &&
+                      {(formulaire.category === "1" &&
                         Object.keys(fruits).map((key) => (
                           <option key={key} value={fruits[key]}>
                             {fruits[key]}
                           </option>
                         ))) ||
-                        (formulaire.categorie === "2" &&
+                        (formulaire.category === "2" &&
                           Object.keys(legumes).map((key) => (
                             <option key={key} value={legumes[key]}>
                               {legumes[key]}
                             </option>
                           )))}
                     </select>
-                    {<span className="text-error">{errors.nom}</span>}
+                    {<span className="text-error">{errors.name}</span>}
                   </div>
 
                   <div className="col-span-2 sm:col-span-1">
@@ -264,7 +268,7 @@ const ModalProduit = ({ isOpen, onClose }) => {
                   </div>
                   <div className="col-span-1">
                     <label
-                      htmlFor="quantite"
+                      htmlFor="quantity"
                       className="block mb-2 text-sm font-medium text-gray-900"
                     >
                       Quantité
@@ -272,16 +276,16 @@ const ModalProduit = ({ isOpen, onClose }) => {
                     <div className="flex">
                       <input
                         type="number"
-                        value={formulaire.quantite}
-                        name="quantite"
-                        id="quantite"
+                        value={formulaire.quantity}
+                        name="quantity"
+                        id="quantity"
                         onChange={handleChange}
                         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-l-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                         placeholder="Entrez la quantité"
                       />
 
                       <select
-                        value={formulaire.quantite}
+                        value={formulaire.quantity}
                         onChange={handleChange}
                         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-r-lg focus:ring-primary-600 focus:border-primary-600 p-2.5"
                       >
@@ -289,7 +293,7 @@ const ModalProduit = ({ isOpen, onClose }) => {
                         <option value="tonne">tonne</option>
                       </select>
                     </div>
-                    {<span className="text-error">{errors.quantite}</span>}
+                    {<span className="text-error">{errors.quantity}</span>}
                   </div>
 
                   <div className="col-span-2 sm:col-span-1">
@@ -299,63 +303,27 @@ const ModalProduit = ({ isOpen, onClose }) => {
                     >
                       Choisir une image
                     </label>
-                    <input
-                      type="file"
-                      id="image"
-                      name="image"
-                      accept="image/*"
-                      className="hidden"
-                      onChange={handleChange}
-                    />
-                    <div className="col-span-2 h-[15rem] w-[26.5rem] relative">
-                      <label
-                        htmlFor="image"
-                        className="absolute inset-0 flex items-center justify-center w-full h-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 cursor-pointer"
-                      >
-                        {formulaire.image ? (
-                          <img
-                            src={URL.createObjectURL(formulaire.image)}
-                            alt="Aperçu de l'image"
-                            className="w-full h-full object-cover rounded-lg"
-                          />
-                        ) : (
-                          <svg
-                            className="w-12 h-12 text-gray-400"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth="2"
-                              d="M12 6v6m0 0v6m0-6h6m-6 0H6"
-                            ></path>
-                          </svg>
-                        )}
-                      </label>
-                    </div>
+                    <FirebaseImg onImageSelect={handleImageSelect} />
 
                     {<span className="text-error">{errors.image}</span>}
                   </div>
                 </div>
                 <div className="col-span-2 sm:col-span-1 mb-3">
                   <label
-                    htmlFor="date"
+                    htmlFor="daterecolte"
                     className="block mb-2 text-sm font-medium text-gray-900"
                   >
                     Date de récolte
                   </label>
                   <input
                     type="date"
-                    value={formulaire.date}
+                    value={formulaire.daterecolte}
                     onChange={handleChange}
-                    name="date"
-                    id="date"
+                    name="daterecolte"
+                    id="daterecolte"
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                   />
-                  <span className="text-error">{errors.date}</span>
+                  <span className="text-error">{errors.daterecolte}</span>
                 </div>
 
                 <button
