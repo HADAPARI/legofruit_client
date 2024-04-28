@@ -4,14 +4,13 @@ import ErrorPage from "./pages/ErrorPage";
 import Home from "./pages/Home";
 import Signin from "./pages/Signin";
 import Signup from "./pages/Signup";
-// import { decrement, increment } from "./redux/reducers/counterSlice";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import Profile from "./pages/Profiles";
 import axios from "axios";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import HomeConnected from "./components/HomeConnected";
 import ProtectedRoute from "./components/ProtectedRoute";
-import Profile from "./pages/Profiles";
 import { set } from "./redux/reducers/userSlice";
 
 import FirstPageResetPassword from "./pages/FirstPageResetPassword";
@@ -42,11 +41,7 @@ const App = () => {
       children: [
         {
           path: "/",
-          element: (
-            <ProtectedRoute defaultPage={<HomeConnected />}>
-              <Home />
-            </ProtectedRoute>
-          ),
+          element: <ProtectedRoute defaultPage={<Home/>}><HomeConnected/></ProtectedRoute>,
         },
         {
           path: "signup",
@@ -62,7 +57,7 @@ const App = () => {
         },
         {
           path: "profile",
-          element: <Profile />,
+          element: <ProtectedRoute defaultPage={<Signin/>}><Profile /></ProtectedRoute>,
         },
         {
           path: "emailverified",

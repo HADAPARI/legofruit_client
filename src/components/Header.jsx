@@ -93,7 +93,7 @@ const Header = () => {
                 className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
               >
                 <li>
-                  <Link to="/" className="py-3">
+                  <Link to="/profile" className="py-3">
                     <User size={20} /> Profil
                   </Link>
                 </li>
