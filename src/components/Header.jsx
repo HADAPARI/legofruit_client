@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import {
   CaretDown,
   Carrot,
@@ -17,6 +17,7 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import axios from "axios";
 import { set } from "../redux/reducers/userSlice";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   const user = useSelector((state) => state.user);
@@ -93,9 +94,9 @@ const Header = () => {
                 className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
               >
                 <li>
-                  <Link to="/profile" className="py-3">
+                  <NavLink to="/profile" className="py-3">
                     <User size={20} /> Profil
-                  </Link>
+                  </NavLink>
                 </li>
                 <li>
                   <div className="py-3" onClick={signOut}>
@@ -121,35 +122,35 @@ const Header = () => {
             className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
           >
             <li>
-              <Link to="/" className="py-3">
+              <NavLink to="/" className="py-3">
                 <Cherries size={20} className="text-red-600" /> Fruits
-              </Link>
+              </NavLink>
             </li>
             <li>
-              <Link to="/" className="py-3">
+              <NavLink to="/" className="py-3">
                 <Carrot size={20} className="text-orange-500" />
                 Legumes
-              </Link>
+              </NavLink>
             </li>
           </ul>
         </div>
         <nav className="flex items-center">
           <ul className="flex gap-7 hover:*:text-orange-500 *:font-semibold">
             <li>
-              <Link to="/">Accueil</Link>
+              <NavLink to="/">Accueil</NavLink>
             </li>
             <li>
-              <Link to="/bestsales">
+              <NavLink to="/bestsales">
                 <Bull text="Chaud" type="error">
                   Meilleures ventes
                 </Bull>
-              </Link>
+              </NavLink>
             </li>
             <li>
-              <Link to="/promotion">Promotion</Link>
+              <NavLink to="/promotion">Promotion</NavLink>
             </li>
             <li>
-              <Link to="/contact">Contact</Link>
+              <NavLink to="/contact">Contact</NavLink>
             </li>
           </ul>
         </nav>
