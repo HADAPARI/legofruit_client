@@ -1,4 +1,7 @@
+// Header.js
 import { Link } from "react-router-dom";
+import { useState } from "react";
+import BasketModal from "./BasketModal";
 import {
   CaretDown,
   Carrot,
@@ -22,10 +25,15 @@ const Header = () => {
   const user = useSelector((state) => state.user);
   const BASE_URL = import.meta.env.VITE_BASE_URL;
   const dispatch = useDispatch();
+  const [isBasketOpen, setIsBasketOpen] = useState(false);
+
+  const openBasketModal = () => {
+    setIsBasketOpen(true);
+  };
 
   const signOut = () => {
     axios
-      .get(`${BASE_URL}/user/signout`, {withCredentials: true})
+      .get(`${BASE_URL}/user/signout`, { withCredentials: true })
       .then(() => {
         dispatch(set(null));
       })
@@ -53,13 +61,19 @@ const Header = () => {
         </div>
 
         <div className="flex gap-3">
-          {user?.role !== "FARMER" && <button className="btn btn-ghost hover:bg-gray-100 flex items-center gap-3">
-            <ShoppingBagOpen size={32} />
-            <div>
-              <div>Mon Panier</div>
-              <div className="text-orange-500 text-start mt-2">$0.00</div>
-            </div>
-          </button>}
+          {user?.role !== "FARMER" && (
+            <button
+              className="btn btn-ghost hover:bg-gray-100 flex items-center gap-3"
+              onClick={openBasketModal}
+            >
+              <ShoppingBagOpen size={32} />
+              <div>
+                <div>Mon Panier</div>
+                <div className="text-orange-500 text-start mt-2">$0.00</div>
+              </div>
+            </button>
+          )}
+
           {!user ? (
             <div className="join">
               <Link
@@ -109,57 +123,61 @@ const Header = () => {
         </div>
       </div>
 
-      {!user && <div className="mt-3 flex justify-between">
-        <div className="dropdown dropdown-hover">
-          <div tabIndex={0} role="button" className="btn btn-ghost">
-            <CirclesFour size={30} className="text-green-600" />
-            <span>Toutes les catégories</span>
-            <CaretDown size={12} />
+      {!user && (
+        <div className="mt-3 flex justify-between">
+          <div className="dropdown dropdown-hover">
+            <div tabIndex={0} role="button" className="btn btn-ghost">
+              <CirclesFour size={30} className="text-green-600" />
+              <span>Toutes les catégories</span>
+              <CaretDown size={12} />
+            </div>
+            <ul
+              tabIndex={0}
+              className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
+            >
+              <li>
+                <Link to="/" className="py-3">
+                  <Cherries size={20} className="text-red-600" /> Fruits
+                </Link>
+              </li>
+              <li>
+                <Link to="/" className="py-3">
+                  <Carrot size={20} className="text-orange-500" />
+                  Legumes
+                </Link>
+              </li>
+            </ul>
           </div>
-          <ul
-            tabIndex={0}
-            className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
-          >
-            <li>
-              <Link to="/" className="py-3">
-                <Cherries size={20} className="text-red-600" /> Fruits
-              </Link>
-            </li>
-            <li>
-              <Link to="/" className="py-3">
-                <Carrot size={20} className="text-orange-500" />
-                Legumes
-              </Link>
-            </li>
-          </ul>
-        </div>
-        <nav className="flex items-center">
-          <ul className="flex gap-7 hover:*:text-orange-500 *:font-semibold">
-            <li>
-              <Link to="/">Accueil</Link>
-            </li>
-            <li>
-              <Link to="/bestsales">
-                <Bull text="Chaud" type="error">
-                  Meilleures ventes
-                </Bull>
-              </Link>
-            </li>
-            <li>
-              <Link to="/promotion">Promotion</Link>
-            </li>
-            <li>
-              <Link to="/contact">Contact</Link>
-            </li>
-          </ul>
-        </nav>
-        <div className="flex gap-5">
-          <div className="flex items-center gap-3 font-semibold">
-            <Headphones size={20} className="text-orange-500" />
-            (+261) 34 63 465 65
+          <nav className="flex items-center">
+            <ul className="flex gap-7 hover:*:text-orange-500 *:font-semibold">
+              <li>
+                <Link to="/">Accueil</Link>
+              </li>
+              <li>
+                <Link to="/bestsales">
+                  <Bull text="Chaud" type="error">
+                    Meilleures ventes
+                  </Bull>
+                </Link>
+              </li>
+              <li>
+                <Link to="/promotion">Promotion</Link>
+              </li>
+              <li>
+                <Link to="/contact">Contact</Link>
+              </li>
+            </ul>
+          </nav>
+          <div className="flex gap-5">
+            <div className="flex items-center gap-3 font-semibold">
+              <Headphones size={20} className="text-orange-500" />
+              (+261) 34 63 465 65
+            </div>
           </div>
         </div>
-      </div>}
+      )}
+
+      {isBasketOpen && <BasketModal onClose={() => setIsBasketOpen(false)} />}
     </div>
   );
 };
