@@ -35,7 +35,8 @@ const legumes = {
   5: "Épinard",
 };
 
-const ModalProduit = ({ isOpen, onClose }) => {
+// eslint-disable-next-line react/prop-types
+const ModalPub = ({ isOpen, onClose }) => {
   const [formulaire, setFormulaire] = useState({
     category: "",
     name: "",
@@ -156,8 +157,6 @@ const ModalProduit = ({ isOpen, onClose }) => {
       {isOpen && (
         <div
           id="modal-produit"
-          tabIndex="-1"
-          aria-hidden="true"
           className="fixed top-0 right-0 left-0 z-50 flex justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full bg-gray-500 bg-opacity-50"
         >
           <div className="relative p-4 w-full max-w-lg max-h-full overflow-y-auto">
@@ -205,7 +204,7 @@ const ModalProduit = ({ isOpen, onClose }) => {
                     <select
                       id="category"
                       name="category"
-                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5"
+                      className="select select-bordered"
                       value={formulaire.category}
                       onChange={handleChange}
                     >
@@ -227,7 +226,7 @@ const ModalProduit = ({ isOpen, onClose }) => {
                       id="name"
                       name="name"
                       onChange={handleChange}
-                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5"
+                      className="select select-bordered"
                       disabled={formulaire.category === ""}
                       value={formulaire.name}
                     >
@@ -261,7 +260,7 @@ const ModalProduit = ({ isOpen, onClose }) => {
                       onChange={handleChange}
                       name="prix"
                       id="prix"
-                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                      className="input input-bordered"
                       placeholder="10000ar"
                     />
                     {<span className="text-error">{errors.prix}</span>}
@@ -273,21 +272,21 @@ const ModalProduit = ({ isOpen, onClose }) => {
                     >
                       Quantité
                     </label>
-                    <div className="flex">
+                    <div className="join">
                       <input
                         type="number"
                         value={formulaire.quantity}
                         name="quantity"
                         id="quantity"
                         onChange={handleChange}
-                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-l-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                        className="input input-bordered w-full join-item"
                         placeholder="Entrez la quantité"
                       />
 
                       <select
                         value={formulaire.quantity}
                         onChange={handleChange}
-                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-r-lg focus:ring-primary-600 focus:border-primary-600 p-2.5"
+                        className="select select-bordered join-item"
                       >
                         <option value="kg">kg</option>
                         <option value="tonne">tonne</option>
@@ -321,14 +320,14 @@ const ModalProduit = ({ isOpen, onClose }) => {
                     onChange={handleChange}
                     name="daterecolte"
                     id="daterecolte"
-                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                    className="input input-bordered w-full"
                   />
                   <span className="text-error">{errors.daterecolte}</span>
                 </div>
 
                 <button
                   type="submit"
-                  className="text-white inline-flex justify-center bg-blue-700 w-full hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 "
+                  className="btn w-full bg-violet-700 text-white hover:bg-violet-800 "
                 >
                   <svg
                     className="me-1 -ms-1 w-5 h-5"
@@ -353,4 +352,4 @@ const ModalProduit = ({ isOpen, onClose }) => {
   );
 };
 
-export default ModalProduit;
+export default ModalPub;

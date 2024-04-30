@@ -2,18 +2,9 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import DeleteAccount from "../components/DeleteAccount";
 import { Star, UserCircle } from "@phosphor-icons/react";
-import ModalPub from "../components/ModalPub";
-
+import { useDispatch } from "react-redux";
+import { set } from "../redux/reducers/userSlice";
 const Profile = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const handleModalOpen = () => {
-    setIsModalOpen(true);
-  };
-
-  const handleModalClose = () => {
-    setIsModalOpen(false);
-  };
 
   const BASE_URL = import.meta.env.VITE_BASE_URL;
   const [profileData, setProfileData] = useState({
@@ -27,6 +18,8 @@ const Profile = () => {
     address: "",
     avatar: "",
   });
+
+  const dispatch = useDispatch();
 
   const [editingData, setEditingData] = useState({
     firstname: "",
@@ -44,9 +37,8 @@ const Profile = () => {
     const fetchProfileData = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:9000/user/profile/e49e792f-3674-43aa-9082-3406900e5a8f"
+          `${BASE_URL}/user/profile`,{withCredentials: true}
         );
-        console.log(response);
         if (response.status === 200) {
           setProfileData(response.data);
         } else {
@@ -58,16 +50,24 @@ const Profile = () => {
     };
 
     fetchProfileData();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const [isEditable, setIsEditable] = useState(false);
   const toggleEdit = () => {
-    setIsEditable(!isEditable);
     if (!isEditable) {
       setEditingData(profileData);
     } else {
       setProfileData(editingData);
+      axios.put(`${BASE_URL}/user/update`, {...editingData},{withCredentials: true})
+      .then((res) =>{
+        dispatch(set(res.data));
+      })
+      .catch(() => {
+         console.log("Pas OK!");
+       });
     }
+    setIsEditable(!isEditable);
   };
 
   const handleChange = (e) => {
@@ -100,6 +100,7 @@ const Profile = () => {
         setCountries(res.data);
       })
       .catch(() => {});
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -195,10 +196,6 @@ const Profile = () => {
           >
             {isEditable ? "Sauvegarder" : "Modifier"}
           </button>
-          <button onClick={handleModalOpen}>Ouvrir la modal</button>
-          {isModalOpen && (
-            <ModalPub isOpen={isModalOpen} onClose={handleModalClose} />
-          )}
         </div>
       </div>
 
