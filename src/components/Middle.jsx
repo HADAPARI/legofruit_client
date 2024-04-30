@@ -1,8 +1,35 @@
 import Product from "./Product";
 import file4 from "../assets/img/file-4.png";
 import file5 from "../assets/img/file-5.png";
+import { useState } from "react";
+import ModalPub from "./ModalPub";
+import { useEffect } from "react";
+import axios from "axios";
 
 const Middle = () => {
+  const BASE_URL = import.meta.env.VITE_BASE_URL;
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleModalOpen = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleModalClose = () => {
+    setIsModalOpen(false);
+  };
+
+  useEffect(() => {
+    axios
+      .get(`${BASE_URL}/product/all`, { withCredentials: true })
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch(() => {
+        console.log("Pas OK!");
+      });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <div className="px-12 w-full">
       <div className="bg-white rounded-md p-4 flex gap-3">
@@ -12,9 +39,15 @@ const Middle = () => {
           </div>
         </div>
         <div className="w-full">
-          <button className="btn rounded-badge w-full flex justify-start">
+          <button
+            className="btn rounded-badge w-full flex justify-start"
+            onClick={handleModalOpen}
+          >
             Qu&apos;est ce que vous avez de frais?
           </button>
+          {isModalOpen && (
+            <ModalPub isOpen={isModalOpen} onClose={handleModalClose} />
+          )}
         </div>
       </div>
 
