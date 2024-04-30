@@ -16,7 +16,7 @@ const Product = ({image,category,type,title,quantity,price,promotion,
         )}
         {user && (
           <div
-            className={`absolute top-0 right-0 px-3 rounded-s-badge w-44 ${
+            className={`absolute top-0 right-0 px-3 rounded-s-badge w-48 ${
               type === "supply" ? "bg-green-600" : "bg-orange-500"
             }`}
           >

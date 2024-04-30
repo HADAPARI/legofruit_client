@@ -1,6 +1,6 @@
 import { Fragment, useState } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
-import { XMarkIcon } from '@heroicons/react/24/outline';
+import { X } from '@phosphor-icons/react';
 
 const products = [
   {
@@ -46,6 +46,7 @@ const products = [
   // More products...
 ];
 
+// eslint-disable-next-line react/prop-types
 export default function BasketModal({ onClose }) {
   const [open, setOpen] = useState(true);
 
@@ -76,7 +77,7 @@ export default function BasketModal({ onClose }) {
                 leaveFrom="translate-x-0"
                 leaveTo="translate-x-full"
               >
-                <Dialog.Panel className="pointer-events-auto w-screen max-w-md pt-28 me-4" >
+                <Dialog.Panel className="pointer-events-auto w-screen max-w-md pt-28" >
                   <div className="flex h-full flex-col bg-white shadow-xl " >
                     <div className="flex-1 overflow-y-auto px-4 py-6 sm:px-6">
                       <div className="flex items-start justify-between">
@@ -89,7 +90,7 @@ export default function BasketModal({ onClose }) {
                           >
                             <span className="absolute -inset-0.5" />
                             <span className="sr-only">Fermer le groupe de fonctions</span>
-                            <XMarkIcon className="h-6 w-6" aria-hidden="true" />
+                            <X size={20} className="h-6 w-6"  />
                           </button>
                         </div>
                       </div>
@@ -148,7 +149,7 @@ export default function BasketModal({ onClose }) {
                           href="#"
                           className="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
                         >
-                          Caisse
+                          Passer à la caisse
                         </a>
                       </div>
                       <div className="mt-6 flex justify-center text-center text-sm text-gray-500">

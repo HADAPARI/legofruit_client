@@ -49,7 +49,13 @@ const Header = () => {
         <div className="flex items-center gap-2">
           <span className="text-gray-400">Livré à </span>
           <MapPin size={20} />
-          <span>Region, Pays</span>
+          {user ? (
+            <span>
+              {user.region}, {user.country}
+            </span>
+          ) : (
+            <span>Région, Pays</span>
+          )}
           <label className="input input-bordered flex items-center gap-2 ms-3">
             <input
               type="text"
