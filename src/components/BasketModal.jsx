@@ -27,11 +27,11 @@ const products = [
     id: 3,
     name: 'Pomme',
     href: '#',
-    color: 'Blue',
-    price: 'Ar 32.00',
+    color: 'Salmon',
+    price: 'Ar 90.00',
     quantity: 1,
     imageSrc: 'https://img.freepik.com/free-photo/apples-red-fresh-mellow-juicy-perfect-whole-white-desk_179666-271.jpg?w=1060&t=st=1714244701~exp=1714245301~hmac=6d9956814a0a27a7e788bc37c18c1a3507384b8ec21af197a4bd07bcadc3c6ba',
-    imageAlt: 'Front of satchel with blue canvas body, black straps and handle, drawstring top, and front zipper pouch.',
+    imageAlt: 'Salmon orange fabric pouch with match zipper, gray zipper pull, and adjustable hip belt.',
   },
   {
     id: 4,
@@ -61,14 +61,12 @@ export default function BasketModal({ onClose }) {
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-         <div className="fixed inset-0 transition-opacity">
-    {/* Arrière-plan gris */}
-    <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', backgroundColor: 'rgba(128, 128, 128, 0.5)', zIndex: '-1', width: '100%', maxWidth: 'md', height: '100%', maxHeight: 'md', borderRadius: '8px' }}></div>
-  </div></Transition.Child>
+          <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+        </Transition.Child>
 
         <div className="fixed inset-0 overflow-hidden">
           <div className="absolute inset-0 overflow-hidden">
-            <div className="pointer-events-none fixed inset-y-0 right-0 pt-28 flex max-w-full pl-10">
+            <div className="pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10">
               <Transition.Child
                 as={Fragment}
                 enter="transform transition ease-in-out duration-500 sm:duration-700"
@@ -78,8 +76,8 @@ export default function BasketModal({ onClose }) {
                 leaveFrom="translate-x-0"
                 leaveTo="translate-x-full"
               >
-                <Dialog.Panel className="pointer-events-auto w-screen max-w-md">
-                  <div className="flex h-full flex-col overflow-y-scroll bg-white shadow-xl">
+                <Dialog.Panel className="pointer-events-auto w-screen max-w-md pt-28 me-4" >
+                  <div className="flex h-full flex-col bg-white shadow-xl " >
                     <div className="flex-1 overflow-y-auto px-4 py-6 sm:px-6">
                       <div className="flex items-start justify-between">
                         <Dialog.Title className="text-lg font-medium text-gray-900">Panier d’achat</Dialog.Title>
@@ -90,7 +88,7 @@ export default function BasketModal({ onClose }) {
                             onClick={onClose}
                           >
                             <span className="absolute -inset-0.5" />
-                            <span className="sr-only">Panneau de fermeture</span>
+                            <span className="sr-only">Fermer le groupe de fonctions</span>
                             <XMarkIcon className="h-6 w-6" aria-hidden="true" />
                           </button>
                         </div>
@@ -120,7 +118,7 @@ export default function BasketModal({ onClose }) {
                                     <p className="mt-1 text-sm text-gray-500">{product.color}</p>
                                   </div>
                                   <div className="flex flex-1 items-end justify-between text-sm">
-                                    <p className="text-gray-500">Qty {product.quantity}</p>
+                                    <p className="text-gray-500">Qté {product.quantity}</p>
 
                                     <div className="flex">
                                       <button
@@ -141,8 +139,8 @@ export default function BasketModal({ onClose }) {
 
                     <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
                       <div className="flex justify-between text-base font-medium text-gray-900">
-                        <p>Sous-tota</p>
-                        <p>Ar 262.00</p>
+                        <p>Sous-total</p>
+                        <p>Ar262.00</p>
                       </div>
                       <p className="mt-0.5 text-sm text-gray-500">Les frais d’expédition et les taxes sont calculés à la caisse.</p>
                       <div className="mt-6">

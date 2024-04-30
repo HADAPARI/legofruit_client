@@ -1,4 +1,5 @@
-import { NavLink,Link } from "react-router-dom";
+// Header.js
+import { Link } from "react-router-dom";
 import { useState } from "react";
 import BasketModal from "./BasketModal";
 import {
@@ -106,9 +107,9 @@ const Header = () => {
                 className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
               >
                 <li>
-                  <NavLink to="/profile" className="py-3">
+                  <Link to="/" className="py-3">
                     <User size={20} /> Profil
-                  </NavLink>
+                  </Link>
                 </li>
                 <li>
                   <div className="py-3" onClick={signOut}>
@@ -123,65 +124,47 @@ const Header = () => {
       </div>
 
       {!user && (
-        <div>
-          <div className="mt-3 flex justify-between">
-            <div className="dropdown dropdown-hover">
-              <div tabIndex={0} role="button" className="btn btn-ghost">
-                <CirclesFour size={30} className="text-green-600" />
-                <span>Toutes les catégories</span>
-                <CaretDown size={12} />
-              </div>
-              <ul
-                tabIndex={0}
-                className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
-              >
-                <li>
-                  <Link to="/" className="py-3">
-                    <Cherries size={20} className="text-red-600" /> Fruits
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/" className="py-3">
-                    <Carrot size={20} className="text-orange-500" />
-                    Legumes
-                  </Link>
-                </li>
-              </ul>
+        <div className="mt-3 flex justify-between">
+          <div className="dropdown dropdown-hover">
+            <div tabIndex={0} role="button" className="btn btn-ghost">
+              <CirclesFour size={30} className="text-green-600" />
+              <span>Toutes les catégories</span>
+              <CaretDown size={12} />
             </div>
             <ul
               tabIndex={0}
               className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
             >
               <li>
-                <NavLink to="/" className="py-3">
+                <Link to="/" className="py-3">
                   <Cherries size={20} className="text-red-600" /> Fruits
-                </NavLink>
+                </Link>
               </li>
               <li>
-                <NavLink to="/" className="py-3">
+                <Link to="/" className="py-3">
                   <Carrot size={20} className="text-orange-500" />
                   Legumes
-                </NavLink>
+                </Link>
               </li>
             </ul>
           </div>
           <nav className="flex items-center">
             <ul className="flex gap-7 hover:*:text-orange-500 *:font-semibold">
               <li>
-                <NavLink to="/">Accueil</NavLink>
+                <Link to="/">Accueil</Link>
               </li>
               <li>
-                <NavLink to="/bestsales">
+                <Link to="/bestsales">
                   <Bull text="Chaud" type="error">
                     Meilleures ventes
                   </Bull>
-                </NavLink>
+                </Link>
               </li>
               <li>
-                <NavLink to="/promotion">Promotion</NavLink>
+                <Link to="/promotion">Promotion</Link>
               </li>
               <li>
-                <NavLink to="/contact">Contact</NavLink>
+                <Link to="/contact">Contact</Link>
               </li>
             </ul>
           </nav>
@@ -189,38 +172,14 @@ const Header = () => {
             <div className="flex items-center gap-3 font-semibold">
               <Headphones size={20} className="text-orange-500" />
               (+261) 34 63 465 65
-            <nav className="flex items-center">
-              <ul className="flex gap-7 hover:*:text-orange-500 *:font-semibold">
-                <li>
-                  <Link to="/">Accueil</Link>
-                </li>
-                <li>
-                  <Link to="/bestsales">
-                    <Bull text="Chaud" type="error">
-                      Meilleures ventes
-                    </Bull>
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/promotion">Promotion</Link>
-                </li>
-                <li>
-                  <Link to="/contact">Contact</Link>
-                </li>
-              </ul>
-            </nav>
-            <div className="flex gap-5">
-              <div className="flex items-center gap-3 font-semibold">
-                <Headphones size={20} className="text-orange-500" />
-                (+261) 34 63 465 65
-              </div>
             </div>
           </div>
-        {isBasketOpen && <BasketModal onClose={() => setIsBasketOpen(false)} />}
         </div>
-      </div>
-  )}
-  </div>)
+      )}
+
+      {isBasketOpen && <BasketModal onClose={() => setIsBasketOpen(false)} />}
+    </div>
+  );
 };
 
 export default Header;
