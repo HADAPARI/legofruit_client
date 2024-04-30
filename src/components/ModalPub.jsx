@@ -35,6 +35,7 @@ const legumes = {
   5: "Épinard",
 };
 
+// eslint-disable-next-line react/prop-types
 const ModalProduit = ({ isOpen, onClose }) => {
   const [formulaire, setFormulaire] = useState({
     category: "",
