@@ -1,14 +1,17 @@
+import { useState } from "react";
+import Comment from "../components/Comment";
+import ModalPub from "../components/ModalPub";
 import Product from "./Product";
 import file4 from "../assets/img/file-4.png";
 import file5 from "../assets/img/file-5.png";
-import { useState } from "react";
-import ModalPub from "./ModalPub";
 import { useEffect } from "react";
 import axios from "axios";
 
 const Middle = () => {
   const BASE_URL = import.meta.env.VITE_BASE_URL;
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isCommentModalOpen, setIsCommentModalOpen] = useState(false);
+  const [comments, setComments] = useState([]);
 
   const handleModalOpen = () => {
     setIsModalOpen(true);
@@ -27,8 +30,19 @@ const Middle = () => {
       .catch(() => {
         console.log("Pas OK!");
       });
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+  const handleCommentModalOpen = () => {
+    setIsCommentModalOpen(true);
+  };
+
+  const handleCommentModalClose = () => {
+    setIsCommentModalOpen(false);
+  };
+
+  const handleAddComment = (newComment) => {
+    setComments([...comments, newComment]);
+  };
 
   return (
     <div className="px-12 w-full">
@@ -55,9 +69,19 @@ const Middle = () => {
         <button className="btn rounded-badge px-5 bg-slate-800 border-none text-white">
           Tous
         </button>
-        <button className="btn btn-ghost rounded-badge px-5 border-none">
+        <button
+          onClick={handleCommentModalOpen}
+          className="btn btn-ghost rounded-badge px-5 border-none"
+        >
           Offres
         </button>
+        {isCommentModalOpen && (
+          <Comment
+            isOpen={isCommentModalOpen}
+            onClose={handleCommentModalClose}
+            onAddComment={handleAddComment}
+          />
+        )}
         <button className="btn btn-ghost rounded-badge px-5 border-none">
           Demandes
         </button>

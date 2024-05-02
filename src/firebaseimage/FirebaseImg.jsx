@@ -42,7 +42,13 @@ function FirebaseImg({ onImageSelect }) {
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     setSelectedImage(file);
-    handleUpload(file);
+    handleUpload(file)
+      .then((url) => {
+        onImageSelect(url);
+      })
+      .catch((error) => {
+        console.error("Error uploading file:", error);
+      });
   };
 
   return (
