@@ -93,17 +93,21 @@ const ModalProduit = ({ isOpen, onClose }) => {
       newErrors.quantity = "Veuillez entrer une quantité valide.";
     }
 
-    if (!formulaire.image) {
+    if (formulaire.image && formulaire.image !== "") {
+      if (!formulaire.daterecolte) {
+        newErrors.daterecolte = "Veuillez entrer une date valide.";
+      }
+    } else {
       newErrors.image = "Veuillez choisir une image.";
     }
-
     if (!formulaire.daterecolte) {
       newErrors.daterecolte = "Veuillez entrer une date valide.";
     }
     setErrors(newErrors);
+    console.log(formulaire);
+
     if (Object.keys(newErrors).length === 0) {
       try {
-        console.log(formulaire);
         const response = await axios.post(
           "http://localhost:9000/produit/ajout/e49e792f-3674-43aa-9082-3406900e5a8f",
           {
@@ -131,8 +135,6 @@ const ModalProduit = ({ isOpen, onClose }) => {
       } catch (error) {
         console.error(error);
       }
-    } else {
-      setErrors(newErrors);
     }
   };
 
@@ -158,7 +160,7 @@ const ModalProduit = ({ isOpen, onClose }) => {
           id="modal-produit"
           tabIndex="-1"
           aria-hidden="true"
-          className="fixed top-0 right-0 left-0 z-50 flex justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full bg-gray-500 bg-opacity-50"
+          className="fixed top-0 right-0 z-50 flex justify-center items-center w-full md:inset-0 h-full max-h-full bg-gray-500 bg-opacity-50"
         >
           <div className="relative p-4 w-full max-w-lg max-h-full overflow-y-auto">
             <div className="relative bg-white rounded-lg shadow max-w-lg ">

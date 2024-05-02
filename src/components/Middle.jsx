@@ -1,8 +1,35 @@
+import { useState } from "react";
+import Comment from "../components/Comment";
+import ModalPub from "../components/ModalPub";
 import Product from "./Product";
 import file4 from "../assets/img/file-4.png";
 import file5 from "../assets/img/file-5.png";
 
 const Middle = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isCommentModalOpen, setIsCommentModalOpen] = useState(false);
+  const [comments, setComments] = useState([]);
+
+  const handleModalOpen = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleModalClose = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleCommentModalOpen = () => {
+    setIsCommentModalOpen(true);
+  };
+
+  const handleCommentModalClose = () => {
+    setIsCommentModalOpen(false);
+  };
+
+  const handleAddComment = (newComment) => {
+    setComments([...comments, newComment]);
+  };
+
   return (
     <div className="px-12 w-full">
       <div className="bg-white rounded-md p-4 flex gap-3">
@@ -12,9 +39,15 @@ const Middle = () => {
           </div>
         </div>
         <div className="w-full">
-          <button className="btn rounded-badge w-full flex justify-start">
+          <button
+            onClick={handleModalOpen}
+            className="btn rounded-badge w-full flex justify-start"
+          >
             Qu&apos;est ce que vous avez de frais?
           </button>
+          {isModalOpen && (
+            <ModalPub isOpen={isModalOpen} onClose={handleModalClose} />
+          )}
         </div>
       </div>
 
@@ -22,9 +55,19 @@ const Middle = () => {
         <button className="btn rounded-badge px-5 bg-slate-800 border-none text-white">
           Tous
         </button>
-        <button className="btn btn-ghost rounded-badge px-5 border-none">
+        <button
+          onClick={handleCommentModalOpen}
+          className="btn btn-ghost rounded-badge px-5 border-none"
+        >
           Offres
         </button>
+        {isCommentModalOpen && (
+          <Comment
+            isOpen={isCommentModalOpen}
+            onClose={handleCommentModalClose}
+            onAddComment={handleAddComment}
+          />
+        )}
         <button className="btn btn-ghost rounded-badge px-5 border-none">
           Demandes
         </button>

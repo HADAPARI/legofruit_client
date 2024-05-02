@@ -2,20 +2,10 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import DeleteAccount from "../components/DeleteAccount";
 import { Star, UserCircle } from "@phosphor-icons/react";
-import ModalPub from "../components/ModalPub";
 
 const Profile = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const handleModalOpen = () => {
-    setIsModalOpen(true);
-  };
-
-  const handleModalClose = () => {
-    setIsModalOpen(false);
-  };
-
   const BASE_URL = import.meta.env.VITE_BASE_URL;
+  const [averageRating, setAverageRating] = useState(0);
   const [profileData, setProfileData] = useState({
     firstname: "",
     lastname: "",
@@ -119,6 +109,40 @@ const Profile = () => {
     setEditingData({ ...editingData, [name]: value });
   };
 
+  const fetchAverageRating = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:9000/review/average-ratings/e49e792f-3674-43aa-9082-3406900e5a8f`
+      );
+      if (response.status === 200) {
+        const roundedRating = Math.round(response.data * 2) / 2;
+        setAverageRating(roundedRating);
+      } else {
+        throw new Error("Failed to fetch average rating");
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchAverageRating();
+  }, []);
+
+  const renderStars = () => {
+    const stars = [];
+    for (let i = 0; i < Math.floor(averageRating); i++) {
+      stars.push(<Star key={i} className="text-yellow-500" />);
+    }
+    if (averageRating % 1 !== 0) {
+      stars.push(<Star key="half" className="text-yellow-500" />);
+    }
+    while (stars.length < 5) {
+      stars.push(<Star key={stars.length} className="text-gray-300" />);
+    }
+    return stars;
+  };
+
   return (
     <div className="px-4 lg:px-60">
       <b>
@@ -170,17 +194,11 @@ const Profile = () => {
               </div>
               <div>
                 <p className="text-gray-600">
-                  Note:<span className="ml-2 text-orange-500">4.5</span>
+                  Note:
+                  <span className="ml-2 text-orange-500">{averageRating}</span>
                   <span>
                     <div className="flex items-center space-x-1 stars-container">
-                      {[...Array(5)].map((_, index) => (
-                        <Star
-                          key={index}
-                          size={20}
-                          weight="fill"
-                          className="text-orange-500"
-                        />
-                      ))}
+                      {renderStars()}
                     </div>
                   </span>
                 </p>
@@ -195,10 +213,6 @@ const Profile = () => {
           >
             {isEditable ? "Sauvegarder" : "Modifier"}
           </button>
-          <button onClick={handleModalOpen}>Ouvrir la modal</button>
-          {isModalOpen && (
-            <ModalPub isOpen={isModalOpen} onClose={handleModalClose} />
-          )}
         </div>
       </div>
 
