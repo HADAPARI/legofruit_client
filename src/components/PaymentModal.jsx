@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 
 function PaymentModal() {
   const [isOpen, setIsOpen] = useState(true);
 
+  // eslint-disable-next-line no-unused-vars
   const toggleModal = () => {
     setIsOpen(!isOpen);
   };

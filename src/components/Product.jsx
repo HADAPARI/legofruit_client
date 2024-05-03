@@ -1,18 +1,14 @@
-import React, { useState } from "react";
+import { useState,useEffect } from "react";
 import { Check, HandArrowUp, ShoppingBagOpen, DotsThreeOutline } from "@phosphor-icons/react";
 import { useSelector, useDispatch } from "react-redux";
 import { add } from "../redux/reducers/basketSlice";
+import axios from "axios";
 
-const Product = ({
-  image,
-  category,
-  type,
-  title,
-  quantity,
-  price,
-  promotion,
-}) => {
+// eslint-disable-next-line react/prop-types
+const Product = ({id,image,category,type,title,quantity,price,promotion}) => {
   const user = useSelector((state) => state.user);
+  const BASE_URL = import.meta.env.VITE_BASE_URL;
+  const [isMine, setIsMine] = useState(false)
   const [isAddedToBasket, setIsAddedToBasket] = useState(false);
   const [showOptions, setShowOptions] = useState(false); // État pour afficher la liste des options
   const dispatch = useDispatch();
@@ -25,6 +21,19 @@ const Product = ({
   const handleOptionsClick = () => {
     setShowOptions(!showOptions); // Inverse l'état d'affichage des options
   };
+
+  useEffect(() => {
+    if (id) {
+      axios.get(`${BASE_URL}/product/ismine/${id}`,{withCredentials: true})
+      .then((response) =>{
+        setIsMine(response.data);
+        console.log(response.data)
+      })
+      .catch(() => {
+        console.log("Pas ok");
+      });
+    }
+  },[])
 
   return (
     <div className="w-80 rounded-xl shadow-xl py-10 bg-white">
@@ -42,11 +51,11 @@ const Product = ({
           >
             {type === "supply" ? (
               <span className="uppercase">
-                Offre {user.role === "FARMER" && "concurrente"}{" "}
+               {isMine && "Mon"} Offre {(!isMine && user.role === "FARMER") && "concurrente"}
               </span>
             ) : (
               <span className="uppercase">
-                Demande {user.role === "SUPERMARKET" && "concurrente"}
+               {isMine && "Mon"} Demande {!isMine && user.role === "SUPERMARKET" && "concurrente"}
               </span>
             )}
           </div>
@@ -56,7 +65,7 @@ const Product = ({
         <img src={image} alt={title} className="w-52" />
       </div>
       <div className="px-5 mt-3">
-        <h4 className="text-gray-400 uppercase">{category}</h4>
+        <h4 className="text-gray-400 uppercase">{category == 1?"FRUIT":"LEGUME"}</h4>
         <h2 className="font-semibold text-xl">{title}</h2>
         <h3>
           Quantités:{" "}
@@ -71,8 +80,8 @@ const Product = ({
           </span>
           <span>/kg</span>
         </p>
-        {((user?.role === "FARMER" && type !== "supply") ||
-          (user?.role === "SUPERMARKET" && type !== "demand")) && (
+        {(!isMine && (user?.role === "FARMER" && type != "supply") ||
+          (user?.role === "SUPERMARKET" && type != "demand")) && (
           <div className="flex justify-end">
             <button className="btn bg-green-600 hover:bg-green-700 text-white p-3 rounded-badge" onClick={handleOptionsClick}>
               <DotsThreeOutline size={20} />
