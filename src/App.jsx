@@ -16,6 +16,7 @@ import { set } from "./redux/reducers/userSlice";
 import FirstPageResetPassword from "./pages/FirstPageResetPassword";
 import SecondPageResetPassword from "./pages/SecondPageResetPassword";
 import ThirdPageResetPassword from "./pages/ThirdPageResetPassword";
+import Subscription from "./pages/Subscription";
 
 const App = () => {
   const BASE_URL = import.meta.env.VITE_BASE_URL;
@@ -76,6 +77,7 @@ const App = () => {
           path: "resetpassword",
           element: <FirstPageResetPassword />,
         },
+        { path: "suscribe", element: <Subscription /> },
       ],
     },
   ]);
