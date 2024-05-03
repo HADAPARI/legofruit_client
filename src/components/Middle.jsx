@@ -2,8 +2,6 @@ import { useState } from "react";
 import Comment from "../components/Comment";
 import ModalPub from "../components/ModalPub";
 import Product from "./Product";
-import file4 from "../assets/img/file-4.png";
-import file5 from "../assets/img/file-5.png";
 import { useEffect } from "react";
 import axios from "axios";
 
@@ -12,6 +10,7 @@ const Middle = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isCommentModalOpen, setIsCommentModalOpen] = useState(false);
   const [comments, setComments] = useState([]);
+  const [products, setProducts] = useState([]);
 
   const handleModalOpen = () => {
     setIsModalOpen(true);
@@ -25,7 +24,7 @@ const Middle = () => {
     axios
       .get(`${BASE_URL}/product/all`, { withCredentials: true })
       .then((res) => {
-        console.log(res.data);
+        setProducts(res.data);
       })
       .catch(() => {
         console.log("Pas OK!");
@@ -87,121 +86,20 @@ const Middle = () => {
         </button>
       </div>
 
-      <div className="flex justify-between mt-10">
-        <Product
-          image={file4}
-          category="Fruits"
-          type="supply"
-          title="Fruits frais de la ferme"
-          quantity={250}
-          price={7.99}
-          promotion="10"
-        />
-        <Product
-          image={file5}
-          category="Fruits"
-          type="supply"
-          title="Orange bien fraiche"
-          quantity={500}
-          price={10}
-          promotion="25"
-        />
-        <Product
-          image={file4}
-          category="Fruits"
-          type="demand"
-          title="Tomate frais de la ferme"
-          quantity={330}
-          price={6.5}
-          promotion="33"
-        />
-      </div>
-      <div className="flex justify-between mt-10">
-        <Product
-          image={file4}
-          category="Fruits"
-          type="supply"
-          title="Fruits frais de la ferme"
-          quantity={250}
-          price={7.99}
-          promotion="10"
-        />
-        <Product
-          image={file5}
-          category="Fruits"
-          type="demand"
-          title="Orange bien fraiche"
-          quantity={500}
-          price={10}
-          promotion="25"
-        />
-        <Product
-          image={file4}
-          category="Fruits"
-          type="demand"
-          title="Tomate frais de la ferme"
-          quantity={330}
-          price={6.5}
-          promotion="33"
-        />
-      </div>
-      <div className="flex justify-between mt-10">
-        <Product
-          image={file4}
-          category="Fruits"
-          type="demand"
-          title="Fruits frais de la ferme"
-          quantity={250}
-          price={7.99}
-          promotion="10"
-        />
-        <Product
-          image={file5}
-          category="Fruits"
-          type="supply"
-          title="Orange bien fraiche"
-          quantity={500}
-          price={10}
-          promotion="25"
-        />
-        <Product
-          image={file4}
-          category="Fruits"
-          type="supply"
-          title="Tomate frais de la ferme"
-          quantity={330}
-          price={6.5}
-          promotion="33"
-        />
-      </div>
-      <div className="flex justify-between mt-10">
-        <Product
-          image={file4}
-          category="Fruits"
-          type="supply"
-          title="Fruits frais de la ferme"
-          quantity={250}
-          price={7.99}
-          promotion="10"
-        />
-        <Product
-          image={file5}
-          category="Fruits"
-          type="demand"
-          title="Orange bien fraiche"
-          quantity={500}
-          price={10}
-          promotion="25"
-        />
-        <Product
-          image={file4}
-          category="Fruits"
-          type="supply"
-          title="Tomate frais de la ferme"
-          quantity={330}
-          price={6.5}
-          promotion="33"
-        />
+      <div className="flex justify-between flex-wrap gap-10 mt-10">
+        {products.map((product) => (
+          <Product
+            key={product.id}
+            id={product.id}
+            image={product.image}
+            category={product.category}
+            type={product.type}
+            title={product.title}
+            quantity={product.quantity}
+            price={product.price}
+            promotion={product.promotion}
+          />
+        ))}
       </div>
     </div>
   );

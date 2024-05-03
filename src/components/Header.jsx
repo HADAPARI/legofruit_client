@@ -67,7 +67,7 @@ const Header = () => {
         </div>
 
         <div className="flex gap-3">
-          {user?.role !== "FARMER" && (
+          {user && user.role !== "FARMER" && (
             <button
               className="btn btn-ghost hover:bg-gray-100 flex items-center gap-3"
               onClick={openBasketModal}
@@ -113,8 +113,8 @@ const Header = () => {
                 className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
               >
                 <li>
-                  <Link to="/" className="py-3">
-                    <User size={20} /> Profil
+                  <Link to="/profile" className="py-3">
+                    <User size={20} /> Profile
                   </Link>
                 </li>
                 <li>

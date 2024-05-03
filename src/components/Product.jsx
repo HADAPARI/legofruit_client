@@ -1,10 +1,28 @@
 import { HandArrowUp, ShoppingBagOpen } from "@phosphor-icons/react";
+import axios from "axios";
+import { useState } from "react";
+import { useEffect } from "react";
 import { useSelector } from "react-redux";
 
 // eslint-disable-next-line react/prop-types
-const Product = ({image,category,type,title,quantity,price,promotion,
-}) => {
+const Product = ({id,image,category,type,title,quantity,price,promotion}) => {
   const user = useSelector((state) => state.user);
+  const BASE_URL = import.meta.env.VITE_BASE_URL;
+  const [isMine, setIsMine] = useState(false)
+
+  useEffect(() => {
+    if (id) {
+      axios.get(`${BASE_URL}/product/ismine/${id}`,{withCredentials: true})
+      .then((response) =>{
+        setIsMine(response.data);
+        console.log(response.data)
+      })
+      .catch(() => {
+        console.log("Pas ok");
+      });
+    }
+  },[])
+  
 
   return (
     <div className="w-80 rounded-xl shadow-xl py-10 bg-white">
@@ -22,11 +40,11 @@ const Product = ({image,category,type,title,quantity,price,promotion,
           >
             {type === "supply" ? (
               <span className="uppercase">
-                Offre {user.role === "FARMER" && "concurrente"}{" "}
+               {isMine && "Mon"} Offre {(!isMine && user.role === "FARMER") && "concurrente"}
               </span>
             ) : (
               <span className="uppercase">
-                Demande {user.role === "SUPERMARKET" && "concurrente"}
+               {isMine && "Mon"} Demande {!isMine && user.role === "SUPERMARKET" && "concurrente"}
               </span>
             )}
           </div>
@@ -36,7 +54,7 @@ const Product = ({image,category,type,title,quantity,price,promotion,
         <img src={image} alt={title} className="w-52" />
       </div>
       <div className="px-5 mt-3">
-        <h4 className="text-gray-400 uppercase">{category}</h4>
+        <h4 className="text-gray-400 uppercase">{category == 1?"FRUIT":"LEGUME"}</h4>
         <h2 className="font-semibold text-xl">{title}</h2>
         <h3>
           Quantités:{" "}
@@ -51,7 +69,7 @@ const Product = ({image,category,type,title,quantity,price,promotion,
           </span>
           <span>/kg</span>
         </p>
-        {((user?.role === "FARMER" && type != "supply") ||
+        {(!isMine && (user?.role === "FARMER" && type != "supply") ||
           (user?.role === "SUPERMARKET" && type != "demand")) && (
           <div className="flex justify-end">
             <button className="btn bg-green-600 hover:bg-green-700 text-white p-3 rounded-badge">

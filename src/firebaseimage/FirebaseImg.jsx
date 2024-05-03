@@ -52,8 +52,7 @@ function FirebaseImg({ onImageSelect }) {
   };
 
   return (
-    <>
-      <div className="col-span-2 h-[15rem] w-[26.5rem] relative">
+      <div className="col-span-2 w-full h-72 relative">
         <label
           htmlFor="image"
           className="absolute inset-0 flex items-center justify-center w-full h-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 cursor-pointer"
@@ -101,7 +100,6 @@ function FirebaseImg({ onImageSelect }) {
           />
         </label>
       </div>
-    </>
   );
 }
 
