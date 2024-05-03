@@ -3,6 +3,7 @@ import { imageDb } from "./Config";
 import { getDownloadURL, listAll, ref, uploadBytes } from "firebase/storage";
 import { v4 } from "uuid";
 
+// eslint-disable-next-line react/prop-types
 function FirebaseImg({ onImageSelect }) {
   const [selectedImage, setSelectedImage] = useState(null);
   const [imgUrl, setImgUrl] = useState([]);

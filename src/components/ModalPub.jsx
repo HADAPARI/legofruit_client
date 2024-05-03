@@ -20,20 +20,72 @@ const formatDate = (harvest) => {
 };
 
 const fruits = {
-  1: "Banane",
-  2: "Pomme",
-  3: "Orange",
-  4: "Fraise",
-  5: "Kiwi",
+  1: "Abricot",
+  2: "Ananas",
+  3: "Avocat",
+  4: "Banane",
+  5: "Cerise",
+  6: "Citron",
+  7: "Datte",
+  8: "Figue",
+  9: "Fraisier",
+  10: "Framboise",
+  11: "Grenade",
+  12: "Groseille",
+  13: "Guava",
+  14: "Kiwi",
+  15: "Mangue",
+  16: "Melon",
+  17: "Myrtille",
+  18: "Orange",
+  19: "Papaye",
+  20: "Pastèque",
+  21: "Pêche",
+  22: "Poire",
+  23: "Pomme",
+  24: "Prune",
+  25: "Raisin",
+  26: "Raisin de table",
+  27: "Ramboutan",
+  28: "Sapote",
+  29: "Tamarin",
+  30: "Tangerine",
 };
 
+
 const legumes = {
-  1: "Pomme de terre",
-  2: "Carotte",
-  3: "Tomate",
-  4: "Laitue",
-  5: "Épinard",
+  1: "Artichaut",
+  2: "Asperge",
+  3: "Aubergine",
+  4: "Betterave",
+  5: "Brocoli",
+  6: "Carotte",
+  7: "Céleri",
+  8: "Chou",
+  9: "Concombre",
+  10: "Courge",
+  11: "Courgette",
+  12: "Épinard",
+  13: "Haricot",
+  14: "Laitue",
+  15: "Maïs",
+  16: "Navet",
+  17: "Oignon",
+  18: "Panais",
+  19: "Patate douce",
+  20: "Persil",
+  21: "Poireau",
+  22: "Pois",
+  23: "Poivron",
+  24: "Pomme de terre",
+  25: "Radis",
+  26: "Rutabaga",
+  27: "Tomate",
+  28: "Topinambour",
+  29: "Fenouil",
+  30: "Chou-fleur",
 };
+
 
 // eslint-disable-next-line react/prop-types
 const ModalPub = ({ isOpen, onClose }) => {
@@ -107,7 +159,7 @@ const ModalPub = ({ isOpen, onClose }) => {
 
     if (Object.keys(newErrors).length === 0) {
       try {
-        const response = await axios.post(
+        await axios.post(
           `${BASE_URL}/product/add`,
           {
             category: formulaire.category,
@@ -120,7 +172,6 @@ const ModalPub = ({ isOpen, onClose }) => {
           },
           { withCredentials: true }
         );
-        console.log(response);
         setFormulaire({
           category: "",
           title: "",
@@ -129,6 +180,7 @@ const ModalPub = ({ isOpen, onClose }) => {
           harvest: null,
           image: null,
         });
+        
         onClose();
       } catch (error) {
         console.error(error);

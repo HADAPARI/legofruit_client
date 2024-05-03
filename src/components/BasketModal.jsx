@@ -7,13 +7,16 @@ import { decreaseQuantity, deleteProduct } from '../redux/reducers/basketSlice';
 import { useDispatch } from 'react-redux';
 import { Trash } from '@phosphor-icons/react';
 
+// eslint-disable-next-line react/prop-types
 export default function BasketModal({ onClose }) {
   const basket = useSelector((state) => state.basket);
   const dispatch = useDispatch();
 
+  // eslint-disable-next-line no-unused-vars
   const [open, setOpen] = useState(true);
   const [showPaymentModal, setShowPaymentModal] = useState(false);
 
+  // eslint-disable-next-line no-unused-vars
   const toggleModal = () => {
     setShowPaymentModal(!showPaymentModal);
   };
@@ -96,7 +99,7 @@ export default function BasketModal({ onClose }) {
                                       <h3>{product.title}</h3>
                                       <p className="ml-4">$ {product.price}/kg</p>
                                     </div>
-                                    <p className="mt-1 text-sm text-gray-500">{product.category}</p>
+                                    <p className="mt-1 text-sm text-gray-500">{product.category == 1?"FRUIT":"LEGUME"}</p>
                                   </div>
                                   <div className="flex flex-1 items-end justify-between text-sm">
                                     <p className="text-gray-500">Quantité: {product.quantity}</p>
@@ -149,7 +152,7 @@ export default function BasketModal({ onClose }) {
                           <button
                             type="button"
                             className="font-medium text-indigo-600 hover:text-indigo-500"
-                            onClick={toggleModal}
+                            onClick={onClose}
                           >
                             continuer mes achats
                             <span aria-hidden="true"> &rarr;</span>
