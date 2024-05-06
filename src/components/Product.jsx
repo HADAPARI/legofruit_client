@@ -91,7 +91,7 @@ const Product = ({
               </span>
             ) : (
               <span className="uppercase">
-                {isMine && "Mon"} Demande{" "}
+                {isMine && "Ma"} Demande{" "}
                 {!isMine && user.role === "SUPERMARKET" && "concurrente"}
               </span>
             )}

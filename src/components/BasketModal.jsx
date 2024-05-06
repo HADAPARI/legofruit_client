@@ -1,14 +1,16 @@
-import { Fragment, useState } from 'react';
-import { Dialog, Transition } from '@headlessui/react';
-import { X } from '@phosphor-icons/react';
-import PaymentModal from './PaymentModal';
-import { useSelector } from 'react-redux';
-import { decreaseQuantity, deleteProduct } from '../redux/reducers/basketSlice';
-import { useDispatch } from 'react-redux';
-import { Trash } from '@phosphor-icons/react';
+import { Fragment, useState } from "react";
+import { Dialog, Transition } from "@headlessui/react";
+import { X } from "@phosphor-icons/react";
+import PaymentModal from "./PaymentModal";
+import { useSelector } from "react-redux";
+import { decreaseQuantity, deleteProduct } from "../redux/reducers/basketSlice";
+import { useDispatch } from "react-redux";
+import { Trash } from "@phosphor-icons/react";
+import axios from "axios";
 
 // eslint-disable-next-line react/prop-types
 export default function BasketModal({ onClose }) {
+  const BASE_URL = import.meta.env.VITE_BASE_URL;
   const basket = useSelector((state) => state.basket);
   const dispatch = useDispatch();
 
@@ -19,10 +21,6 @@ export default function BasketModal({ onClose }) {
   // eslint-disable-next-line no-unused-vars
   const toggleModal = () => {
     setShowPaymentModal(!showPaymentModal);
-  };
-
-  const handleOpenPaymentModal = () => {
-    setShowPaymentModal(true);
   };
 
   const handleClosePaymentModal = () => {
@@ -36,7 +34,23 @@ export default function BasketModal({ onClose }) {
   const handleDecrease = (index) => {
     dispatch(decreaseQuantity({ index: index }));
   };
-  
+
+  const sendNotification = () => {
+    const data = {
+      recipientId: "df79423f-7373-47b6-8975-81ff6ba4b7aa",
+      message: "Bonjour, vous avez un nouveau message !",
+    };
+
+    axios
+      .post(`${BASE_URL}/notifications/send`, data, { withCredentials: true })
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.error("Error sending notification:", error);
+      });
+  };
+
   return (
     <Transition.Root show={open} as={Fragment}>
       <Dialog as="div" className="relative z-40" onClose={onClose}>
@@ -78,7 +92,9 @@ export default function BasketModal({ onClose }) {
                             onClick={onClose}
                           >
                             <span className="absolute -inset-0.5" />
-                            <span className="sr-only">Fermer le groupe de fonctions</span>
+                            <span className="sr-only">
+                              Fermer le groupe de fonctions
+                            </span>
                             <X size={20} className="h-6 w-6" />
                           </button>
                         </div>
@@ -86,32 +102,47 @@ export default function BasketModal({ onClose }) {
 
                       <div className="mt-8">
                         <div className="flow-root">
-                          <ul role="list" className="-my-6 divide-y divide-gray-200">
+                          <ul
+                            role="list"
+                            className="-my-6 divide-y divide-gray-200"
+                          >
                             {basket.map((product, index) => (
                               <li key={product.id} className="flex py-6">
                                 <div className="h-24 w-24 flex  flex-col justify-center items-center rounded-md border border-gray-200">
-                                  <img src={product.image} alt={product.title} className="w-full" />
+                                  <img
+                                    src={product.image}
+                                    alt={product.title}
+                                    className="w-full"
+                                  />
                                 </div>
 
                                 <div className="flex flex-1 flex-col ml-4">
                                   <div>
                                     <div className="flex justify-between text-base font-medium text-gray-900">
                                       <h3>{product.title}</h3>
-                                      <p className="ml-4">$ {product.price}/kg</p>
+                                      <p className="ml-4">
+                                        $ {product.price}/kg
+                                      </p>
                                     </div>
-                                    <p className="mt-1 text-sm text-gray-500">{product.category == 1?"FRUIT":"LEGUME"}</p>
+                                    <p className="mt-1 text-sm text-gray-500">
+                                      {product.category == 1
+                                        ? "FRUIT"
+                                        : "LEGUME"}
+                                    </p>
                                   </div>
                                   <div className="flex flex-1 items-end justify-between text-sm">
-                                    <p className="text-gray-500">Quantité: {product.quantity}</p>
+                                    <p className="text-gray-500">
+                                      Quantité: {product.quantity}
+                                    </p>
 
                                     <div className="flex">
-                                    <button
-                                      type="button"
-                                      className="font-medium text-indigo-600 hover:text-indigo-500"
-                                      onClick={() => handleDecrease(index)}
-                                    >
-                                      -
-                                    </button>
+                                      <button
+                                        type="button"
+                                        className="font-medium text-indigo-600 hover:text-indigo-500"
+                                        onClick={() => handleDecrease(index)}
+                                      >
+                                        -
+                                      </button>
                                       <button
                                         type="button"
                                         className="font-medium text-red-600 hover:text-red-500 ml-2"
@@ -135,20 +166,24 @@ export default function BasketModal({ onClose }) {
                         <p>Ar262.00</p>
                       </div>
                       <p className="mt-0.5 text-sm text-gray-500">
-                        Les frais d’expédition et les taxes sont calculés à la caisse.
+                        Les frais d’expédition et les taxes sont calculés à la
+                        caisse.
                       </p>
                       <div className="mt-6">
                         <button
-                          onClick={handleOpenPaymentModal}
+                          onClick={sendNotification}
                           className="block w-full max-w-xs mx-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg px-3 py-3 font-semibold"
                         >
-                          <i className="mdi mdi-lock-outline mr-1"></i> Passer à la caisse
+                          <i className="mdi mdi-lock-outline mr-1"></i> Passer à
+                          la caisse
                         </button>
                       </div>
-                      {showPaymentModal && <PaymentModal onClose={handleClosePaymentModal} />}
+                      {showPaymentModal && (
+                        <PaymentModal onClose={handleClosePaymentModal} />
+                      )}
                       <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
                         <p>
-                          ou{' '}
+                          ou{" "}
                           <button
                             type="button"
                             className="font-medium text-indigo-600 hover:text-indigo-500"
