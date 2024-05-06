@@ -17,6 +17,7 @@ import FirstPageResetPassword from "./pages/FirstPageResetPassword";
 import SecondPageResetPassword from "./pages/SecondPageResetPassword";
 import ThirdPageResetPassword from "./pages/ThirdPageResetPassword";
 import Subscription from "./pages/Subscription";
+import Dashboard from "./pages/Dashboard";
 
 const App = () => {
   const BASE_URL = import.meta.env.VITE_BASE_URL;
@@ -78,6 +79,7 @@ const App = () => {
           element: <FirstPageResetPassword />,
         },
         { path: "suscribe", element: <Subscription /> },
+        { path: "dashbord", element: <Dashboard /> },
       ],
     },
   ]);
