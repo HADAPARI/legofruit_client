@@ -13,6 +13,7 @@ import {
   ShoppingBagOpen,
   SignOut,
   User,
+  Bell,
 } from "@phosphor-icons/react";
 import Logo from "./Logo";
 import Bull from "./Bull";
@@ -20,8 +21,10 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import axios from "axios";
 import { set } from "../redux/reducers/userSlice";
+import { useEffect } from "react";
 
 const Header = () => {
+  const [notifications, setNotifications] = useState([]);
   const user = useSelector((state) => state.user);
   const BASE_URL = import.meta.env.VITE_BASE_URL;
   const dispatch = useDispatch();
@@ -41,6 +44,21 @@ const Header = () => {
         console.log("Pas OK!");
       });
   };
+
+  useEffect(() => {
+    const fetchNotifications = async () => {
+      try {
+        const response = await axios.get(`${BASE_URL}/notifications/user`, {
+          withCredentials: true,
+        });
+        setNotifications(response.data);
+      } catch (error) {
+        console.error("Error fetching notifications:", error);
+      }
+    };
+
+    fetchNotifications();
+  }, []);
 
   return (
     <div className="px-20 py-5 shadow-lg sticky top-0 z-50 bg-white">
@@ -67,6 +85,90 @@ const Header = () => {
         </div>
 
         <div className="flex gap-3">
+          {user && (
+            <button>
+              <div className="dropdown dropdown-bottom w-full flex justify-end">
+                <div tabIndex={0} className="btn btn-ghost rounded-full">
+                  <Bell size={32} />
+                </div>
+                <ul
+                  tabIndex={0}
+                  className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded w-80"
+                >
+                  {Array.isArray(notifications) && notifications.length > 0 ? (
+                    notifications.map((notification) => (
+                      <li key={notification.id}>
+                        <div
+                          id="toast-message-cta"
+                          className="w-full max-w-xs p-4 bg-white rounded-lg shadow "
+                          role="alert"
+                        >
+                          <div className="flex items-start">
+                            <img
+                              className="w-8 h-8 rounded-full"
+                              src="/docs/images/people/profile-picture-1.jpg"
+                              alt="Jese Leos image"
+                            />
+                            <div className="ms-3 text-sm font-normal ">
+                              <span className="mb-1 text-sm font-semibold text-black">
+                                {notification.title}
+                              </span>
+                              <div className="mb-2 text-sm font-normal text-gray-900">
+                                {notification.message}
+                              </div>
+                              <a
+                                href="#"
+                                className="inline-flex px-2.5 py-1.5 text-xs font-medium text-center text-white bg-green-600 rounded-lg"
+                              >
+                                Accepter
+                              </a>
+                              <a
+                                href="#"
+                                className="inline-flex px-2.5 py-1.5 text-xs font-medium text-center text-white bg-red-600 rounded-lg m-2"
+                              >
+                                Refuser
+                              </a>
+                            </div>
+                            <button
+                              type="button"
+                              className="ms-auto -mx-1.5 -my-1.5 justify-center items-center flex-shrink-0 text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex h-8 w-8 dark:text-gray-500 dark:hover:text-black"
+                              data-dismiss-target="#toast-message-cta"
+                              aria-label="Close"
+                              onClick={() => {
+                                const toastMessage =
+                                  document.getElementById("toast-message-cta");
+                                toastMessage.remove();
+                              }}
+                            >
+                              <span className="sr-only">Close</span>
+                              <svg
+                                className="w-3 h-3"
+                                aria-hidden="true"
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 14 14"
+                              >
+                                <path
+                                  stroke="currentColor"
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth="2"
+                                  d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+                                />
+                              </svg>
+                            </button>
+                          </div>
+                        </div>
+                      </li>
+                    ))
+                  ) : (
+                    <li>Aucune notification</li>
+                  )}
+                </ul>
+              </div>
+            </button>
+          )}
+
           {user && user.role !== "FARMER" && (
             <button
               className="btn btn-ghost hover:bg-gray-100 flex items-center gap-3"

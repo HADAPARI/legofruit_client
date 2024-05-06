@@ -5,6 +5,7 @@ import axios from "axios";
 import FirebaseImg from "../firebaseimage/FirebaseImg";
 import { useDispatch } from "react-redux";
 import { add } from "../redux/reducers/productSlice";
+import { useSelector } from "react-redux";
 
 const formatDate = (harvest) => {
   const d = new Date(harvest);
@@ -54,7 +55,6 @@ const fruits = {
   30: "Tangerine",
 };
 
-
 const legumes = {
   1: "Artichaut",
   2: "Asperge",
@@ -88,13 +88,12 @@ const legumes = {
   30: "Chou-fleur",
 };
 
-
-
 // eslint-disable-next-line react/prop-types
 const ModalPub = ({ isOpen, onClose }) => {
-const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
   const BASE_URL = import.meta.env.VITE_BASE_URL;
+  const user = useSelector((state) => state.user);
   const [formulaire, setFormulaire] = useState({
     category: "",
     title: "",
@@ -178,7 +177,7 @@ const dispatch = useDispatch();
           { withCredentials: true }
         );
 
-        dispatch(add(formulaire))
+        dispatch(add(formulaire));
         setFormulaire({
           category: "",
           title: "",
@@ -188,7 +187,6 @@ const dispatch = useDispatch();
           image: null,
         });
 
-        
         onClose();
       } catch (error) {
         console.error(error);
@@ -313,7 +311,9 @@ const dispatch = useDispatch();
                 className="input input-bordered"
                 placeholder="10000ar"
               />
-              {<span className="text-error">{errors.price}</span>}
+              {user && user.role !== "SUPERMARKET" && (
+                <span className="text-error">{errors.price}</span>
+              )}
             </div>
             <div className="col-span-1">
               <label

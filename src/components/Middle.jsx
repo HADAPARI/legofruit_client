@@ -1,8 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Comment from "../components/Comment";
 import ModalPub from "../components/ModalPub";
 import Product from "./Product";
-import { useEffect } from "react";
 import axios from "axios";
 import { useSelector,useDispatch } from "react-redux";
 import { set } from "../redux/reducers/productSlice";
@@ -30,10 +29,10 @@ const Middle = () => {
         dispatch(set(res.data));
       })
       .catch(() => {
-        console.log("Pas OK!");
+        console.log("Erreur lors de la récupération des produits !");
       });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [BASE_URL]); // Modification pour inclure BASE_URL dans les dépendances
+
   const handleCommentModalOpen = () => {
     setIsCommentModalOpen(true);
   };
@@ -84,6 +83,7 @@ const Middle = () => {
             onAddComment={handleAddComment}
           />
         )}
+
         <button className="btn btn-ghost rounded-badge px-5 border-none">
           Demandes
         </button>
