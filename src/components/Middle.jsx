@@ -4,13 +4,16 @@ import ModalPub from "../components/ModalPub";
 import Product from "./Product";
 import { useEffect } from "react";
 import axios from "axios";
+import { useSelector,useDispatch } from "react-redux";
+import { set } from "../redux/reducers/productSlice";
 
 const Middle = () => {
   const BASE_URL = import.meta.env.VITE_BASE_URL;
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isCommentModalOpen, setIsCommentModalOpen] = useState(false);
   const [comments, setComments] = useState([]);
-  const [products, setProducts] = useState([]);
+  const products = useSelector((state)=>state.product);
+  const dispatch = useDispatch();
 
   const handleModalOpen = () => {
     setIsModalOpen(true);
@@ -24,7 +27,7 @@ const Middle = () => {
     axios
       .get(`${BASE_URL}/product/all`, { withCredentials: true })
       .then((res) => {
-        setProducts(res.data);
+        dispatch(set(res.data));
       })
       .catch(() => {
         console.log("Pas OK!");

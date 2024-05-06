@@ -12,16 +12,7 @@ import { add } from "../redux/reducers/basketSlice";
 import axios from "axios";
 
 // eslint-disable-next-line react/prop-types
-const Product = ({
-  id,
-  image,
-  category,
-  type,
-  title,
-  quantity,
-  price,
-  promotion,
-}) => {
+const Product = ({id,image,category,type,title,quantity,price,promotion,}) => {
   const user = useSelector((state) => state.user);
   const BASE_URL = import.meta.env.VITE_BASE_URL;
   const [isMine, setIsMine] = useState(false);
@@ -51,8 +42,8 @@ const Product = ({
   return (
     <div className="w-80 rounded-xl shadow-xl pb-10 bg-white">
       {isMine && (
-        <div className="dropdown dropdown-bottom w-full flex justify-end">
-          <div tabIndex={0} className="btn btn-ghost rounded-full">
+        <div className="dropdown dropdown-bottom w-full flex justify-end pt-1 pe-1">
+          <div tabIndex={0} className="hover:bg-gray-100 size-7 flex justify-center items-center cursor-pointer rounded-full">
             <DotsThreeVertical size={18} />
           </div>
           <ul
@@ -98,7 +89,7 @@ const Product = ({
           </div>
         )}
       </div>
-      <div className="flex justify-center mt-10">
+      <div className="flex justify-center">
         <img src={image} alt={title} className="w-52" />
       </div>
       <div className="px-5 mt-3">

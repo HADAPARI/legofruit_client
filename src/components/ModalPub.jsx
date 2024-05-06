@@ -3,6 +3,8 @@ import { useEffect } from "react";
 import "../assets/css/StyleModal.css";
 import axios from "axios";
 import FirebaseImg from "../firebaseimage/FirebaseImg";
+import { useDispatch } from "react-redux";
+import { add } from "../redux/reducers/productSlice";
 
 const formatDate = (harvest) => {
   const d = new Date(harvest);
@@ -87,8 +89,11 @@ const legumes = {
 };
 
 
+
 // eslint-disable-next-line react/prop-types
 const ModalPub = ({ isOpen, onClose }) => {
+const dispatch = useDispatch();
+
   const BASE_URL = import.meta.env.VITE_BASE_URL;
   const [formulaire, setFormulaire] = useState({
     category: "",
@@ -172,6 +177,8 @@ const ModalPub = ({ isOpen, onClose }) => {
           },
           { withCredentials: true }
         );
+
+        dispatch(add(formulaire))
         setFormulaire({
           category: "",
           title: "",
@@ -180,6 +187,7 @@ const ModalPub = ({ isOpen, onClose }) => {
           harvest: null,
           image: null,
         });
+
         
         onClose();
       } catch (error) {

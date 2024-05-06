@@ -50,11 +50,19 @@ const App = () => {
         },
         {
           path: "signup",
-          element: <Signup />,
+          element: (
+            <ProtectedRoute defaultPage={<Signup />}>
+              <HomeConnected />
+            </ProtectedRoute>
+          ),
         },
         {
           path: "signin",
-          element: <Signin />,
+          element: (
+            <ProtectedRoute defaultPage={<Signin />}>
+              <HomeConnected />
+            </ProtectedRoute>
+          ),
         },
         {
           path: "account/activation/:token",
