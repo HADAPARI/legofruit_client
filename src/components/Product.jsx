@@ -137,8 +137,8 @@ const Product = ({
           </div>
         )}
       </div>
-      <div className="flex justify-center">
-        <img src={image} alt={title} className="w-52" />
+      <div className="flex justify-center mt-6">
+        <img src={image} alt={title} className="w-full h-96 max-h-52" />
       </div>
       <div className="px-5 mt-3">
         <h4 className="text-gray-400 uppercase">
