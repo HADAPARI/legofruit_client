@@ -22,6 +22,7 @@ import { useDispatch } from "react-redux";
 import axios from "axios";
 import { set } from "../redux/reducers/userSlice";
 import { useEffect } from "react";
+import { setBasket } from "../redux/reducers/basketSlice";
 
 const Header = () => {
   const [notifications, setNotifications] = useState([]);
@@ -29,6 +30,7 @@ const Header = () => {
   const BASE_URL = import.meta.env.VITE_BASE_URL;
   const dispatch = useDispatch();
   const [isBasketOpen, setIsBasketOpen] = useState(false);
+  const storedBasket = JSON.parse(localStorage.getItem("basket")) || [];
 
   const openBasketModal = () => {
     setIsBasketOpen(true);
@@ -58,7 +60,79 @@ const Header = () => {
     };
 
     fetchNotifications();
+    dispatch(setBasket(storedBasket));
   }, []);
+
+  const sendNotificationAccept = () => {
+    if (notifications.length === 0) {
+      console.log("Aucune notification à envoyer.");
+      return;
+    }
+    notifications.forEach((notification) => {
+      if (notification.sender && notification.sender.id) {
+        const data = {
+          recipientId: notification.sender.id, // Utilisation de owner.id comme destinataire
+          message:
+            "Votre demande a été acceptée par : " + notification.firstname,
+        };
+
+        axios
+          .post(`${BASE_URL}/notifications/send`, data, {
+            withCredentials: true,
+          })
+          .then((response) => {
+            console.log(response.data);
+          })
+          .catch((error) => {
+            console.error("Erreur lors de l'envoi de la notification :", error);
+          });
+      } else {
+        console.warn(
+          "Propriété 'owner.id' manquante dans la notification :", // Ajustement du message d'avertissement
+          notification
+        );
+      }
+    });
+  };
+
+  const sendNotificationReject = () => {
+    if (notifications.length === 0) {
+      console.log("Aucune notification à envoyer.");
+      return;
+    }
+    notifications.forEach((notification) => {
+      if (notification.sender && notification.sender.id) {
+        const data = {
+          recipientId: notification.sender.id,
+          message:
+            "Votre demande a été refusée par : " + notification.sender.username,
+        };
+
+        axios
+          .post(`${BASE_URL}/notifications/send`, data, {
+            withCredentials: true,
+          })
+          .then((response) => {
+            console.log(response.data);
+          })
+          .catch((error) => {
+            console.error("Erreur lors de l'envoi de la notification :", error);
+          });
+      } else {
+        console.warn(
+          "Propriété 'owner.id' manquante dans la notification :", // Ajustement du message d'avertissement
+          notification
+        );
+      }
+    });
+  };
+  const basket = useSelector((state) => state.basket);
+
+  const total = basket.reduce(
+    (acc, product) => acc + product.price * product.quantity,
+    0
+  );
+  const formattedTotal = total.toLocaleString("fr-FR");
 
   return (
     <div className="px-20 py-5 shadow-lg sticky top-0 z-50 bg-white">
@@ -84,7 +158,7 @@ const Header = () => {
           </label>
         </div>
 
-        <div className="flex gap-3">
+        <div className="flex gap-3 scroll-smooth">
           {user && (
             <button>
               <div className="dropdown dropdown-bottom w-full flex justify-end">
@@ -93,22 +167,18 @@ const Header = () => {
                 </div>
                 <ul
                   tabIndex={0}
-                  className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded w-80"
+                  className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded w-80 mt-3 max-h-80 overflow-y-auto" // Ajoutez une classe de hauteur maximale et activez le défilement
                 >
                   {Array.isArray(notifications) && notifications.length > 0 ? (
                     notifications.map((notification) => (
-                      <li key={notification.id}>
+                      <li key={notification.id} className="mb-3">
+                        {" "}
                         <div
                           id="toast-message-cta"
                           className="w-full max-w-xs p-4 bg-white rounded-lg shadow "
                           role="alert"
                         >
                           <div className="flex items-start">
-                            <img
-                              className="w-8 h-8 rounded-full"
-                              src="/docs/images/people/profile-picture-1.jpg"
-                              alt="Jese Leos image"
-                            />
                             <div className="ms-3 text-sm font-normal ">
                               <span className="mb-1 text-sm font-semibold text-black">
                                 {notification.title}
@@ -116,18 +186,24 @@ const Header = () => {
                               <div className="mb-2 text-sm font-normal text-gray-900">
                                 {notification.message}
                               </div>
-                              <a
-                                href="#"
-                                className="inline-flex px-2.5 py-1.5 text-xs font-medium text-center text-white bg-green-600 rounded-lg"
-                              >
-                                Accepter
-                              </a>
-                              <a
-                                href="#"
-                                className="inline-flex px-2.5 py-1.5 text-xs font-medium text-center text-white bg-red-600 rounded-lg m-2"
-                              >
-                                Refuser
-                              </a>
+                              {user && user.role !== "SUPERMARKET" && (
+                                <div>
+                                  <button
+                                    href="#"
+                                    onClick={sendNotificationAccept}
+                                    className="inline-flex px-2.5 py-1.5 text-xs font-medium text-center text-white bg-green-600 rounded-lg"
+                                  >
+                                    Accepter
+                                  </button>
+                                  <button
+                                    href="#"
+                                    onClick={sendNotificationReject}
+                                    className="inline-flex px-2.5 py-1.5 text-xs font-medium text-center text-white bg-red-600 rounded-lg m-2"
+                                  >
+                                    Refuser
+                                  </button>
+                                </div>
+                              )}
                             </div>
                             <button
                               type="button"
@@ -177,7 +253,9 @@ const Header = () => {
               <ShoppingBagOpen size={32} />
               <div>
                 <div>Mon Panier</div>
-                <div className="text-orange-500 text-start mt-2">$0.00</div>
+                <div className="text-orange-500 text-start mt-2">
+                  {formattedTotal} Ar
+                </div>
               </div>
             </button>
           )}

@@ -4,6 +4,9 @@ export const basketSlice = createSlice({
   name: "basket",
   initialState: [],
   reducers: {
+    setBasket: (state, action) => {
+      return action.payload;
+    },
     add: (state, action) => {
       state.push(action.payload);
     },
@@ -16,13 +19,13 @@ export const basketSlice = createSlice({
     },
     decreaseQuantity: (state, action) => {
       const { id } = action.payload;
-      const product = state.find(product => product.id === id);
+      const product = state.find((product) => product.id === id);
       if (product && product.quantity > 1) {
         product.quantity--;
       }
     },
     decreaseAllQuantities: (state) => {
-      state.forEach(product => {
+      state.forEach((product) => {
         if (product.quantity > 1) {
           product.quantity--;
         }
@@ -31,6 +34,12 @@ export const basketSlice = createSlice({
   },
 });
 
-export const { add, deleteProduct, decreaseQuantity, decreaseAllQuantities } = basketSlice.actions;
+export const {
+  setBasket,
+  add,
+  deleteProduct,
+  decreaseQuantity,
+  decreaseAllQuantities,
+} = basketSlice.actions;
 
 export default basketSlice.reducer;
