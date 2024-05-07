@@ -24,14 +24,8 @@ export default function BasketModal({ onClose }) {
   const basket = useSelector((state) => state.basket);
   const dispatch = useDispatch();
 
-  // eslint-disable-next-line no-unused-vars
   const [open, setOpen] = useState(true);
   const [showPaymentModal, setShowPaymentModal] = useState(false);
-
-  // eslint-disable-next-line no-unused-vars
-  const toggleModal = () => {
-    setShowPaymentModal(!showPaymentModal);
-  };
 
   const handleClosePaymentModal = () => {
     setShowPaymentModal(false);
@@ -46,20 +40,30 @@ export default function BasketModal({ onClose }) {
   };
 
   const sendNotification = () => {
-    const data = {
-      recipientId: "df79423f-7373-47b6-8975-81ff6ba4b7aa",
-      message: "Bonjour, vous avez un nouveau message !",
-    };
+    basket.map((product) => {
+      const data = {
+        recipientId: product.owner.id,
+        message:
+          "Bonjour, votre produit a été intéressé par : " +
+          product.owner.username,
+      };
 
-    axios
-      .post(`${BASE_URL}/notifications/send`, data, { withCredentials: true })
-      .then((response) => {
-        console.log(response.data);
-      })
-      .catch((error) => {
-        console.error("Error sending notification:", error);
-      });
+      axios
+        .post(`${BASE_URL}/notifications/send`, data, { withCredentials: true })
+        .then((response) => {
+          console.log(response.data);
+        })
+        .catch((error) => {
+          console.error("Error sending notification:", error);
+        });
+    });
   };
+
+  const totalPrice = basket.reduce(
+    (acc, product) => acc + product.price * product.quantity,
+    0
+  );
+  const formattedTotal = totalPrice.toLocaleString("fr-FR");
 
   return (
     <Transition.Root show={open} as={Fragment}>
@@ -131,7 +135,7 @@ export default function BasketModal({ onClose }) {
                                     <div className="flex justify-between text-base font-medium text-gray-900">
                                       <h3>{product.title}</h3>
                                       <p className="ml-4">
-                                        $ {product.price}/kg
+                                        Ar {product.price}/kg
                                       </p>
                                     </div>
                                     <p className="mt-1 text-sm text-gray-500">
@@ -173,7 +177,7 @@ export default function BasketModal({ onClose }) {
                     <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
                       <div className="flex justify-between text-base font-medium text-gray-900">
                         <p>Sous-total</p>
-                        <p>Ar262.00</p>
+                        <p>{formattedTotal} Ar</p>
                       </div>
                       <p className="mt-0.5 text-sm text-gray-500">
                         Les frais d’expédition et les taxes sont calculés à la

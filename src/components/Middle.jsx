@@ -3,7 +3,7 @@ import Comment from "../components/Comment";
 import ModalPub from "../components/ModalPub";
 import Product from "./Product";
 import axios from "axios";
-import { useSelector,useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { set } from "../redux/reducers/productSlice";
 
 const Middle = () => {
@@ -11,7 +11,7 @@ const Middle = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isCommentModalOpen, setIsCommentModalOpen] = useState(false);
   const [comments, setComments] = useState([]);
-  const products = useSelector((state)=>state.product);
+  const products = useSelector((state) => state.product);
   const dispatch = useDispatch();
 
   const handleModalOpen = () => {
@@ -94,6 +94,7 @@ const Middle = () => {
           <Product
             key={product.id}
             id={product.id}
+            owner={product.user}
             image={product.image}
             category={product.category}
             type={product.type}
