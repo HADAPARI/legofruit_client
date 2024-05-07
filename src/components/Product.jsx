@@ -12,7 +12,17 @@ import { add } from "../redux/reducers/basketSlice";
 import axios from "axios";
 
 // eslint-disable-next-line react/prop-types
-const Product = ({id,image,category,type,title,quantity,price,promotion,}) => {
+const Product = ({
+  id,
+  owner,
+  image,
+  category,
+  type,
+  title,
+  quantity,
+  price,
+  promotion,
+}) => {
   const user = useSelector((state) => state.user);
   const BASE_URL = import.meta.env.VITE_BASE_URL;
   const [isMine, setIsMine] = useState(false);
@@ -20,8 +30,43 @@ const Product = ({id,image,category,type,title,quantity,price,promotion,}) => {
   const dispatch = useDispatch();
 
   const addToBasket = () => {
-    dispatch(add({ image, category, type, title, quantity, price, promotion }));
+    // Ajouter le produit au panier dans le state Redux
+    dispatch(
+      add({
+        id,
+        owner,
+        image,
+        category,
+        type,
+        title,
+        quantity,
+        price,
+        promotion,
+      })
+    );
     setIsAddedToBasket(true);
+
+    // Récupérer le panier depuis le localStorage
+    const storedBasket = JSON.parse(localStorage.getItem("basket")) || [];
+
+    // Ajouter le nouveau produit au panier stocké localement
+    const updatedBasket = [
+      ...storedBasket,
+      {
+        id,
+        owner,
+        image,
+        category,
+        type,
+        title,
+        quantity,
+        price,
+        promotion,
+      },
+    ];
+
+    // Mettre à jour le panier dans le localStorage
+    localStorage.setItem("basket", JSON.stringify(updatedBasket));
   };
 
   useEffect(() => {
@@ -43,7 +88,10 @@ const Product = ({id,image,category,type,title,quantity,price,promotion,}) => {
     <div className="w-80 rounded-xl shadow-xl pb-10 bg-white">
       {isMine && (
         <div className="dropdown dropdown-bottom w-full flex justify-end pt-1 pe-1">
-          <div tabIndex={0} className="hover:bg-gray-100 size-7 flex justify-center items-center cursor-pointer rounded-full">
+          <div
+            tabIndex={0}
+            className="hover:bg-gray-100 size-7 flex justify-center items-center cursor-pointer rounded-full"
+          >
             <DotsThreeVertical size={18} />
           </div>
           <ul
@@ -106,7 +154,7 @@ const Product = ({id,image,category,type,title,quantity,price,promotion,}) => {
         </h3>
         <p className="my-5">
           <span className="text-orange-500 text-2xl font-bold">
-            {"$" + price}
+            {"Ar " + price}
           </span>
           <span>/kg</span>
         </p>

@@ -237,7 +237,7 @@ const ModalPub = ({ isOpen, onClose }) => {
                 d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
               />
             </svg>
-            <span className="sr-only">Fermer le modal</span>
+            <span className="sr-only ">Fermer le modal</span>
           </button>
         </div>
         <form className="p-4 md:p-5 scroll-smooth " onSubmit={handleSubmit}>
