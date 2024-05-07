@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import { Fragment, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { X } from "@phosphor-icons/react";
@@ -8,15 +7,7 @@ import { decreaseQuantity, deleteProduct } from "../redux/reducers/basketSlice";
 import { useDispatch } from "react-redux";
 import { Trash } from "@phosphor-icons/react";
 import axios from "axios";
-=======
-import { Fragment, useState } from 'react';
-import { Dialog, Transition } from '@headlessui/react';
-import { X } from '@phosphor-icons/react';
-import { useSelector } from 'react-redux';
-import { decreaseQuantity, deleteProduct } from '../redux/reducers/basketSlice';
-import { useDispatch } from 'react-redux';
-import { Trash } from '@phosphor-icons/react';
->>>>>>> antonio
+
 
 // eslint-disable-next-line react/prop-types
 export default function BasketModal({ onClose }) {
